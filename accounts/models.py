@@ -12,7 +12,7 @@ class UserProfile(models.Model):
         related_name="profile",
     )
     age = models.PositiveIntegerField(
-        validators=[MinValueValidator(1)],
+        validators=[MinValueValidator(13)],
         null=True,
         blank=True,
     )
