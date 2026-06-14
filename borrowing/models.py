@@ -55,4 +55,5 @@ class BorrowRecord(models.Model):
         inv = self.book_inventory
         inv.available_copies += 1
         inv.save()
+        
         return True
