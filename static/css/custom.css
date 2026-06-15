@@ -1,0 +1,126 @@
+:root {
+  --brand-primary: #2c5f8a;
+  --brand-primary-dark: #1e4363;
+  --brand-accent: #f4a259;
+  --text-body: #2b2b2b;
+  --text-muted: #5f6b76;
+}
+
+body {
+  color: var(--text-body);
+  line-height: 1.6;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+/* Navbar */
+.navbar.bg-dark {
+  background-color: var(--brand-primary-dark) !important;
+}
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.nav-link {
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+.nav-link:hover {
+  color: var(--brand-accent) !important;
+}
+
+/* Cards */
+.card {
+  border: none;
+  border-radius: 0.75rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1) !important;
+}
+.card-body h1, .card-body h2, .card-body h3 {
+  color: var(--brand-primary-dark);
+  font-weight: 600;
+}
+.card-body a {
+  color: var(--brand-primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+.card-body a:hover {
+  color: var(--brand-accent);
+  text-decoration: underline;
+}
+
+/* Text hierarchy */
+.text-muted {
+  color: var(--text-muted) !important;
+}
+p {
+  margin-bottom: 0.6rem;
+}
+
+/* Badges (genres) */
+.badge.text-bg-light {
+  color: var(--brand-primary-dark) !important;
+  border-color: var(--brand-primary) !important;
+  font-weight: 500;
+  padding: 0.4em 0.7em;
+}
+.badge.text-bg-secondary {
+  background-color: var(--brand-primary) !important;
+  font-weight: 500;
+  padding: 0.4em 0.7em;
+}
+.badge.text-bg-secondary:hover {
+  background-color: var(--brand-accent) !important;
+  color: #1e1e1e !important;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--brand-primary);
+  border-color: var(--brand-primary);
+}
+.btn-primary:hover {
+  background-color: var(--brand-primary-dark);
+  border-color: var(--brand-primary-dark);
+}
+.btn-outline-primary {
+  color: var(--brand-primary);
+  border-color: var(--brand-primary);
+}
+.btn-outline-primary:hover {
+  background-color: var(--brand-primary);
+}
+
+/* Table */
+.table thead {
+  background-color: #f1f5f8;
+  color: var(--brand-primary-dark);
+  font-weight: 600;
+}
+.table td, .table th {
+  vertical-align: middle;
+}
+
+/* Alerts */
+.alert {
+  border-radius: 0.5rem;
+  border: none;
+}
+
+/* Pagination */
+.pagination .page-link {
+  color: var(--brand-primary);
+}
+.pagination .page-item.active .page-link {
+  background-color: var(--brand-primary);
+  border-color: var(--brand-primary);
+}
+
+/* Search form */
+.form-control:focus, .form-select:focus {
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 0.2rem rgba(44,95,138,0.15);
+}
