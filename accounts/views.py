@@ -38,3 +38,30 @@ class RegisterView(View):
         messages.success(request, "Welcome to LibraryTrack!")
         return redirect("catalog:home")
 
+
+class LoginView(View):
+    template_name = "accounts/login.html"
+
+    def get(self, request):
+        if request.user.is_authenticated:
+            return redirect("catalog:home")
+        return render(request, self.template_name, {"form": LoginForm()})
+
+    def post(self, request):
+        form = LoginForm(request, data=request.POST)
+        if not form.is_valid():
+            return render(request, self.template_name, {"form": form})
+
+        user = form.get_user()
+        login(request, user)
+        messages.success(request, f"Welcome back, {user.username}!")
+
+        # Send user to the page they were trying to reach, or home
+        return redirect(request.GET.get("next", "catalog:home"))
+
+
+class LogoutView(View):
+    def post(self, request):
+        logout(request)
+        messages.info(request, "You have been logged out.")
+        return redirect("accounts:login")
