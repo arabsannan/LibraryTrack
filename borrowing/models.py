@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import timedelta
+from django.db.models import Q
 
 
 class BorrowRecord(models.Model):
@@ -23,6 +24,13 @@ class BorrowRecord(models.Model):
     )
 
     class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "book_inventory"],
+                condition=Q(status__in=["pending", "approved", "overdue"]),
+                name="unique_active_borrow_per_user_and_inventory",
+            ),
+        ]
         ordering = ["-request_date"]
 
     def __str__(self):
@@ -57,3 +65,23 @@ class BorrowRecord(models.Model):
         inv.save()
         
         return True
+
+
+class WaitlistEntry(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="waitlist_entries")
+    book_inventory = models.ForeignKey(
+        "catalog.BookInventory",
+        on_delete=models.CASCADE,
+        related_name="waitlist_entries",
+    )
+    timestamp = models.DateTimeField(auto_now_add=True)
+    notified = models.BooleanField(default=False)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["user", "book_inventory"], name="unique_waitlist_entry"),
+        ]
+        ordering = ["timestamp"]
+
+    def __str__(self):
+        return f"{self.user.username} waitlisted {self.book_inventory}"

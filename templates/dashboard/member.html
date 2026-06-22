@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="h3 mb-3">Member dashboard</h1>
+<p class="text-muted">Session visits: {{ visit_count }}</p>
+
+<div class="row g-4">
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h5">Active loans</h2>
+        <ul>
+          {% for record in active_loans %}
+            <li>{{ record.book_inventory.book.title }} at {{ record.book_inventory.library.name }} - {{ record.status }}</li>
+          {% empty %}
+            <li>No active loans.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h5">Notifications</h2>
+        <ul>
+          {% for notification in notifications %}
+            <li>{{ notification.title }} - {{ notification.message }}</li>
+          {% empty %}
+            <li>No notifications yet.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
