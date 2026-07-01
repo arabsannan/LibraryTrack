@@ -1,10 +1,11 @@
 from django.contrib import messages
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .forms import LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm, EditProfileForm
 
 
 class RegisterView(View):
@@ -65,3 +66,27 @@ class LogoutView(View):
         logout(request)
         messages.info(request, "You have been logged out.")
         return redirect("accounts:login")
+
+
+class ProfileView(LoginRequiredMixin, View):
+    template_name = "accounts/profile.html"
+    
+    def get(self, request):
+        return render(request, self.template_name)
+
+
+class EditProfileView(LoginRequiredMixin, View):
+    template_name = "accounts/edit_profile.html"
+
+    def get(self, request):
+        form = EditProfileForm(instance=request.user.profile)
+        return render(request, self.template_name, {"form": form})
+
+    def post(self, request):
+        form = EditProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if not form.is_valid():
+            return render(request, self.template_name, {"form": form})
+
+        form.save()
+        messages.success(request, "Profile updated successfully.")
+        return redirect("accounts:profile")

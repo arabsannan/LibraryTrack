@@ -76,6 +76,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'librarytrack.wsgi.application'
 
+LOGIN_URL = "accounts:login"
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases

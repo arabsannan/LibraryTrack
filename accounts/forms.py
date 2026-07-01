@@ -34,3 +34,10 @@ class RegisterForm(forms.ModelForm):
 class LoginForm(AuthenticationForm):
     # Reuses Django's built-in login form — handles username + password + error messages.
     pass
+
+
+class EditProfileForm(forms.ModelForm):
+    # Only age and photo are editable cause username and email are fixed after registration.
+    class Meta:
+        model = UserProfile
+        fields = ["age", "profile_photo"]
