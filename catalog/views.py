@@ -1,8 +1,7 @@
 from django.db.models import Q
 from django.views.generic import DetailView, ListView
 
-from .models import Book, Library
-
+from .models import Book, Genre, Library
 
 class HomeView(ListView):
 	model = Book
@@ -14,7 +13,7 @@ class HomeView(ListView):
 		return super().dispatch(request, *args, **kwargs)
 
 	def get_queryset(self):
-		queryset = Book.objects.prefetch_related("inventories__library")
+		queryset = Book.objects.prefetch_related("genres", "inventories__library")
 		query = self.request.GET.get("q", "").strip()
 		genre = self.request.GET.get("genre", "").strip()
 		library = self.request.GET.get("library", "").strip()
@@ -25,11 +24,11 @@ class HomeView(ListView):
 				Q(title__icontains=query)
 				| Q(author__icontains=query)
 				| Q(isbn__icontains=query)
-				| Q(genre__icontains=query)
+				| Q(genres__name__icontains=query)
 				| Q(inventories__library__name__icontains=query)
 			)
 		if genre:
-			queryset = queryset.filter(genre__icontains=genre)
+			queryset = queryset.filter(genres__name__icontains=genre)
 		if library:
 			queryset = queryset.filter(inventories__library__name__icontains=library)
 		if availability == "available":
@@ -40,9 +39,7 @@ class HomeView(ListView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context["libraries"] = Library.objects.all()
-		context["genres"] = (
-			Book.objects.exclude(genre="").values_list("genre", flat=True).distinct().order_by("genre")
-		)
+		context["genres"] = Genre.objects.values_list("name", flat=True)
 		context["query_params"] = self.request.GET
 		return context
 
@@ -55,7 +52,7 @@ class BookDetailView(DetailView):
 	slug_url_kwarg = "isbn"
 
 	def get_object(self, queryset=None):
-		return Book.objects.prefetch_related("inventories__library").get(isbn=self.kwargs["isbn"])
+		return Book.objects.prefetch_related("genres", "inventories__library").get(isbn=self.kwargs["isbn"])
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)

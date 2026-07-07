@@ -13,13 +13,23 @@ class Library(models.Model):
 
     def __str__(self):
         return self.name
+    
+
+class Genre(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    class Meta:
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name
 
 
 class Book(models.Model):
     isbn = models.CharField(max_length=20, unique=True, db_index=True)
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
-    genre = models.CharField(max_length=120, blank=True)
+    genres = models.ManyToManyField(Genre, blank=True, related_name="books")
     description = models.TextField(blank=True)
     age_rating = models.CharField(max_length=20, blank=True)
     cover_image = models.ImageField(upload_to="book_covers/", blank=True, null=True)
@@ -29,6 +39,7 @@ class Book(models.Model):
 
     def __str__(self):
         return f"{self.title} ({self.isbn})"
+    
 
 
 class BookInventory(models.Model):
