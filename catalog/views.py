@@ -1,5 +1,4 @@
-from django.db.models import Q
-from django.views.generic import DetailView, ListView
+from django.shortcuts import render
 
 from .models import Book, Genre, Library
 

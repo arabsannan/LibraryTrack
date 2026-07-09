@@ -5,9 +5,8 @@ from django.views.generic import TemplateView
 
 from accounts.models import LibraryAdmin
 from borrowing.models import BorrowRecord
-from catalog.models import Book, Notification
-
-from requests.models import DonationRequest, PurchaseRequest
+from catalog.models import Book
+from .models import Notification
 
 
 class MemberDashboardView(LoginRequiredMixin, TemplateView):
@@ -54,6 +53,4 @@ class AdminDashboardView(LoginRequiredMixin, TemplateView):
             book_inventory__library=library,
             status="overdue",
         ).select_related("user", "book_inventory__book")
-        context["donation_requests"] = DonationRequest.objects.filter(status="pending")[:10]
-        context["purchase_requests"] = PurchaseRequest.objects.filter(status="pending")[:10]
         return context
