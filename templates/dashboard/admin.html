@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="h3 mb-3">Admin dashboard - {{ library.name }}</h1>
+
+<div class="row g-4">
+  <div class="col-lg-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h5">Inventory</h2>
+        <ul>
+          {% for item in inventory %}
+            <li>{{ item.book.title }}: {{ item.available_copies }}/{{ item.total_copies }}</li>
+          {% empty %}
+            <li>No inventory assigned to this library.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h5">Pending borrows</h2>
+        <ul>
+          {% for record in pending_borrows %}
+            <li>{{ record.user.username }} requested {{ record.book_inventory.book.title }}</li>
+          {% empty %}
+            <li>No pending borrow requests.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h5">Overdue items</h2>
+        <ul>
+          {% for record in overdue_borrows %}
+            <li>{{ record.user.username }} - {{ record.book_inventory.book.title }}</li>
+          {% empty %}
+            <li>No overdue loans.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4 mt-1">
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h5">Pending donation requests</h2>
+        <ul>
+          {% for item in donation_requests %}
+            <li>{{ item.title }} by {{ item.user.username }}</li>
+          {% empty %}
+            <li>No donation requests.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h5">Pending purchase requests</h2>
+        <ul>
+          {% for item in purchase_requests %}
+            <li>{{ item.book_title }} by {{ item.user.username }}</li>
+          {% empty %}
+            <li>No purchase requests.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

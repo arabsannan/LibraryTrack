@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <h1 class="h3">{{ book.title }}</h1>
+    <p class="text-muted mb-1">By {{ book.author }}</p>
+    <p>ISBN: {{ book.isbn }}</p>
+    <p>Genre: {{ book.genre|default:"Not set" }}</p>
+    <p>{{ book.description|default:"No description provided." }}</p>
+  </div>
+</div>
+
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <h2 class="h5">Availability by library</h2>
+    <table class="table">
+      <thead><tr><th>Library</th><th>Available</th><th>Total</th><th>Actions</th></tr></thead>
+      <tbody>
+        {% for inventory in inventories %}
+          <tr>
+            <td>{{ inventory.library.name }}</td>
+            <td>{{ inventory.available_copies }}</td>
+            <td>{{ inventory.total_copies }}</td>
+            <td>
+              <a class="btn btn-sm btn-outline-primary {% if not user.is_authenticated %}disabled{% endif %}" href="{% url 'borrowing:request_borrow' inventory.id %}">Borrow</a>
+              {% if inventory.available_copies == 0 %}
+                <a class="btn btn-sm btn-outline-secondary {% if not user.is_authenticated %}disabled{% endif %}" href="{% url 'borrowing:join_waitlist' inventory.id %}">Join waitlist</a>
+              {% endif %}
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="4">No inventory registered for this title yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h5">Request or donate</h2>
+        <a class="btn btn-primary" href="{% url 'requests:purchase' %}">Request purchase</a>
+        <a class="btn btn-outline-primary" href="{% url 'requests:donate' %}">Donate this book</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h5">Recently viewed</h2>
+        <ul class="mb-0">
+          {% for recent_book in recently_viewed_books %}
+            <li><a href="{% url 'catalog:book_detail' recent_book.isbn %}">{{ recent_book.title }}</a></li>
+          {% empty %}
+            <li>No recent history in this session.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

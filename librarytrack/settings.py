@@ -39,11 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'catalog',
-    'accounts',
-    'dashboard',
-    'borrowing',
-    'requests',
+    'catalog.apps.CatalogConfig',
+    'accounts.apps.AccountsConfig',
+    'dashboard.apps.DashboardConfig',
+    'borrowing.apps.BorrowingConfig',
+    'requests.apps.RequestsConfig',
 ]
 
 MIDDLEWARE = [
@@ -76,6 +76,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'librarytrack.wsgi.application'
 
+LOGIN_URL = "accounts:login"
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
@@ -126,3 +127,7 @@ STATIC_URL = 'static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'catalog:home'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
