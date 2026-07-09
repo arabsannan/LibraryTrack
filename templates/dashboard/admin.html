@@ -52,7 +52,27 @@
     <div class="card shadow-sm">
       <div class="card-body">
         <h2 class="h5">Pending donation requests</h2>
-        <p class="mb-0 text-muted">Request handling belongs to the requests module and is intentionally outside this slice.</p>
+        <ul>
+          {% for item in donation_requests %}
+            <li>{{ item.title }} by {{ item.user.username }}</li>
+          {% empty %}
+            <li>No donation requests.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h5">Pending purchase requests</h2>
+        <ul>
+          {% for item in purchase_requests %}
+            <li>{{ item.book_title }} by {{ item.user.username }}</li>
+          {% empty %}
+            <li>No purchase requests.</li>
+          {% endfor %}
+        </ul>
       </div>
     </div>
   </div>
