@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load lt_extras %}
+{% block title %}The team · LibraryTrack{% endblock %}
+{% block content %}
+
+<div class="section-head">
+  <div>
+    <span class="eyebrow">The people behind it</span>
+    <h1 style="font-size:1.9rem; margin-top:0.3rem;">Meet the team</h1>
+    <p class="muted" style="margin:0;">Five builders, one library system. Here's who owns what.</p>
+  </div>
+</div>
+
+<section class="section feature-grid">
+  {% for m in members %}
+    <div class="card">
+      <div class="book-cover cover-{{ m.name|cover_variant }}" style="width:56px; height:56px; aspect-ratio:1; border-radius:16px; margin-bottom:0.9rem; padding:0;">
+        <span class="spine" style="font-size:1.1rem;">{{ m.name|initials }}</span>
+      </div>
+      <h3 class="section-title mb-1">{{ m.name }}</h3>
+      <div class="chip chip-lime mb-2">{{ m.role }}</div>
+      <p class="muted small" style="margin:0;">{{ m.blurb }}</p>
+    </div>
+  {% endfor %}
+</section>
+
+<section class="section card text-center">
+  <p class="muted" style="margin:0;">Want to reach us? <a href="{% url 'requests:contact' %}">Send a message →</a></p>
+</section>
+
+{% endblock %}

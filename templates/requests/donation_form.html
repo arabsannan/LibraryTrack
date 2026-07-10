@@ -1,9 +1,25 @@
 {% extends "base.html" %}
+{% block title %}Donate a book · LibraryTrack{% endblock %}
 {% block content %}
-<h1 class="h3 mb-3">Donate a book</h1>
-<form method="post" class="card card-body shadow-sm">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button class="btn btn-primary">Submit donation request</button>
-</form>
+<div class="narrow-wide">
+  <div class="card card-lg">
+    <span class="eyebrow">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+      Donation
+    </span>
+    <h1 style="font-size:1.55rem; font-weight:800; margin:0.5rem 0 0.4rem;">Donate a book</h1>
+    <p class="form-hint mb-3">Tell us about the book you'd like to give. A library admin reviews its condition before it goes on the shelf.</p>
+    <form method="post" class="form-stack">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="field">
+          <label class="field-label">{{ field.label }}{% if not field.field.required %} <span class="faint">(optional)</span>{% endif %}</label>
+          {{ field }}
+          {% if field.errors %}<div class="field-error">{{ field.errors }}</div>{% endif %}
+        </div>
+      {% endfor %}
+      <button class="btn btn-primary btn-block" type="submit">Submit donation request</button>
+    </form>
+  </div>
+</div>
 {% endblock %}
