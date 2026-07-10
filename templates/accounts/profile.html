@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load lt_extras %}
+{% block title %}My profile · LibraryTrack{% endblock %}
+{% block content %}
+<div style="max-width:680px; margin:0 auto;">
+  <div class="card card-lg">
+    <div class="row-flex gap-3">
+      <div class="book-cover cover-{{ user.username|cover_variant }}" style="width:88px; height:88px; aspect-ratio:1; border-radius:20px; flex-shrink:0; overflow:hidden; padding:0;">
+        {% if user.profile.profile_photo %}
+          <img src="{{ user.profile.profile_photo.url }}" alt="Profile photo" style="width:100%; height:100%; object-fit:cover;">
+        {% else %}
+          <span class="spine" style="font-size:1.7rem;">{{ user.username|first|upper }}</span>
+        {% endif %}
+      </div>
+      <div>
+        <span class="eyebrow">Your profile</span>
+        <h1 style="font-size:1.7rem; margin:0.3rem 0 0.1rem;">{{ user.username }}</h1>
+        <p class="muted" style="margin:0;">{{ user.email }}</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <table class="lt-table">
+      <tbody>
+        <tr><td class="faint" style="width:40%;">Username</td><td style="font-weight:600;">{{ user.username }}</td></tr>
+        <tr><td class="faint">Email</td><td>{{ user.email }}</td></tr>
+        <tr><td class="faint">Age</td><td>{{ user.profile.age|default:"—" }}</td></tr>
+        <tr><td class="faint">Member since</td><td>{{ user.date_joined|date:"F j, Y" }}</td></tr>
+      </tbody>
+    </table>
+
+    <div class="row-flex wrap gap-2 mt-3">
+      <a class="btn btn-primary" href="{% url 'accounts:edit_profile' %}">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        Edit profile
+      </a>
+      <a class="btn btn-ghost" href="{% url 'dashboard:member' %}">Go to dashboard</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
