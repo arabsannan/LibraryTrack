@@ -1,8 +1,31 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm, SetPasswordForm
 
 from .models import UserProfile
+
+class StyledPasswordResetForm(PasswordResetForm):
+    """The 'enter your email' step, with our input styling."""
+    email = forms.EmailField(
+        max_length=254,
+        widget=forms.EmailInput(attrs={
+            "class": "form-control",
+            "placeholder": "you@example.com",
+            "autocomplete": "email",
+        }),
+    )
+
+class StyledSetPasswordForm(SetPasswordForm):
+    """The 'choose a new password' step, with our input styling."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["new_password1"].widget.attrs.update({
+            "class": "form-control", "autocomplete": "new-password",
+        })
+        self.fields["new_password2"].widget.attrs.update({
+            "class": "form-control", "autocomplete": "new-password",
+        })
 
 
 class RegisterForm(forms.ModelForm):
