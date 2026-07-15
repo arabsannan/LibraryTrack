@@ -1,0 +1,1693 @@
+[
+  {
+    "model": "catalog.genre",
+    "pk": 1,
+    "fields": {
+      "name": "Adventure"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 2,
+    "fields": {
+      "name": "Biography"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 3,
+    "fields": {
+      "name": "Classic"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 4,
+    "fields": {
+      "name": "Contemporary"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 5,
+    "fields": {
+      "name": "Crime"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 6,
+    "fields": {
+      "name": "Dystopian"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 7,
+    "fields": {
+      "name": "Fantasy"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 8,
+    "fields": {
+      "name": "Historical Fiction"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 9,
+    "fields": {
+      "name": "Horror"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 10,
+    "fields": {
+      "name": "Literary Fiction"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 11,
+    "fields": {
+      "name": "Magical Realism"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 12,
+    "fields": {
+      "name": "Memoir"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 13,
+    "fields": {
+      "name": "Mystery"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 14,
+    "fields": {
+      "name": "Non-Fiction"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 15,
+    "fields": {
+      "name": "Philosophy"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 16,
+    "fields": {
+      "name": "Poetry"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 17,
+    "fields": {
+      "name": "Political Fiction"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 18,
+    "fields": {
+      "name": "Post-Apocalyptic"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 19,
+    "fields": {
+      "name": "Psychological"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 20,
+    "fields": {
+      "name": "Romance"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 21,
+    "fields": {
+      "name": "Science"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 22,
+    "fields": {
+      "name": "Science Fiction"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 23,
+    "fields": {
+      "name": "Short Stories"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 24,
+    "fields": {
+      "name": "Thriller"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 25,
+    "fields": {
+      "name": "Young Adult"
+    }
+  },
+  {
+    "model": "catalog.library",
+    "pk": 1,
+    "fields": {
+      "name": "Windsor Central Library",
+      "address": "850 Ouellette Ave, Windsor, ON N9A 4M9",
+      "contact_information": "central@librarytrack.example.ca | (519) 255-6770"
+    }
+  },
+  {
+    "model": "catalog.library",
+    "pk": 2,
+    "fields": {
+      "name": "Riverside Branch",
+      "address": "6305 Wyandotte St E, Windsor, ON N8S 1M9",
+      "contact_information": "riverside@librarytrack.example.ca | (519) 255-6773"
+    }
+  },
+  {
+    "model": "catalog.library",
+    "pk": 3,
+    "fields": {
+      "name": "Sandwich Branch",
+      "address": "3312 Sandwich St, Windsor, ON N9C 1A9",
+      "contact_information": "sandwich@librarytrack.example.ca | (519) 255-6774"
+    }
+  },
+  {
+    "model": "catalog.library",
+    "pk": 4,
+    "fields": {
+      "name": "Fontainebleau Branch",
+      "address": "8200 Wyandotte St E, Windsor, ON N8S 1T6",
+      "contact_information": "fontainebleau@librarytrack.example.ca | (519) 255-6775"
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 1,
+    "fields": {
+      "isbn": "9780441013593",
+      "title": "Dune",
+      "author": "Frank Herbert",
+      "genres": [
+        1,
+        17,
+        22
+      ],
+      "description": "On the desert planet Arrakis, a young heir becomes entangled in a struggle over the universe's most valuable substance.",
+      "age_rating": "Teen",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 2,
+    "fields": {
+      "isbn": "9780547928227",
+      "title": "The Hobbit",
+      "author": "J.R.R. Tolkien",
+      "genres": [
+        1,
+        3,
+        7
+      ],
+      "description": "A reluctant hobbit is swept into a quest to reclaim a mountain of treasure guarded by a dragon.",
+      "age_rating": "All Ages",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 3,
+    "fields": {
+      "isbn": "9780451524935",
+      "title": "Nineteen Eighty-Four",
+      "author": "George Orwell",
+      "genres": [
+        3,
+        6,
+        17
+      ],
+      "description": "A clerk in a totalitarian state begins to question the Party that rewrites reality itself.",
+      "age_rating": "Teen",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 4,
+    "fields": {
+      "isbn": "9780141439518",
+      "title": "Pride and Prejudice",
+      "author": "Jane Austen",
+      "genres": [
+        3,
+        10,
+        20
+      ],
+      "description": "Wit, pride, and misjudgement collide as the Bennet sisters navigate marriage and society.",
+      "age_rating": "All Ages",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 5,
+    "fields": {
+      "isbn": "9780441478125",
+      "title": "The Left Hand of Darkness",
+      "author": "Ursula K. Le Guin",
+      "genres": [
+        10,
+        15,
+        22
+      ],
+      "description": "An envoy to an alien world without fixed gender confronts the limits of his own assumptions.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 6,
+    "fields": {
+      "isbn": "9780807083697",
+      "title": "Kindred",
+      "author": "Octavia E. Butler",
+      "genres": [
+        8,
+        10,
+        22
+      ],
+      "description": "A modern Black woman is pulled back in time to a nineteenth-century plantation.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 7,
+    "fields": {
+      "isbn": "9781400033416",
+      "title": "Beloved",
+      "author": "Toni Morrison",
+      "genres": [
+        8,
+        10,
+        11
+      ],
+      "description": "A formerly enslaved woman is haunted, literally and otherwise, by the daughter she lost.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 8,
+    "fields": {
+      "isbn": "9780060883287",
+      "title": "One Hundred Years of Solitude",
+      "author": "Gabriel Garcia Marquez",
+      "genres": [
+        3,
+        10,
+        11
+      ],
+      "description": "Seven generations of the Buendia family rise and fall in the town of Macondo.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 9,
+    "fields": {
+      "isbn": "9780143107637",
+      "title": "Crime and Punishment",
+      "author": "Fyodor Dostoevsky",
+      "genres": [
+        3,
+        15,
+        19
+      ],
+      "description": "A destitute student commits murder to test a theory, and is undone by his own conscience.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 10,
+    "fields": {
+      "isbn": "9780374528379",
+      "title": "The Brothers Karamazov",
+      "author": "Fyodor Dostoevsky",
+      "genres": [
+        3,
+        10,
+        15
+      ],
+      "description": "Three brothers, one murdered father, and an argument about God that refuses to resolve.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 11,
+    "fields": {
+      "isbn": "9780345404473",
+      "title": "Blade Runner: Do Androids Dream of Electric Sheep?",
+      "author": "Philip K. Dick",
+      "genres": [
+        6,
+        19,
+        22
+      ],
+      "description": "A bounty hunter retires rogue androids while wondering what separates them from him.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 12,
+    "fields": {
+      "isbn": "9780441569595",
+      "title": "Neuromancer",
+      "author": "William Gibson",
+      "genres": [
+        6,
+        22,
+        24
+      ],
+      "description": "A burned-out hacker takes one last job in a world of cyberspace and corporate ghosts.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 13,
+    "fields": {
+      "isbn": "9780553380958",
+      "title": "Snow Crash",
+      "author": "Neal Stephenson",
+      "genres": [
+        1,
+        22,
+        24
+      ],
+      "description": "A pizza-delivering hacker chases a virus that infects both computers and minds.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 14,
+    "fields": {
+      "isbn": "9780307387899",
+      "title": "The Road",
+      "author": "Cormac McCarthy",
+      "genres": [
+        1,
+        10,
+        18
+      ],
+      "description": "A father and son walk south through the ashes of a dead world.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 15,
+    "fields": {
+      "isbn": "9780804172448",
+      "title": "Station Eleven",
+      "author": "Emily St. John Mandel",
+      "genres": [
+        10,
+        18,
+        22
+      ],
+      "description": "A travelling symphony performs Shakespeare in the ruins twenty years after a pandemic.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 16,
+    "fields": {
+      "isbn": "9780385490818",
+      "title": "The Handmaid's Tale",
+      "author": "Margaret Atwood",
+      "genres": [
+        6,
+        10,
+        17
+      ],
+      "description": "In the Republic of Gilead, a handmaid records what she is forbidden to say aloud.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 17,
+    "fields": {
+      "isbn": "9781400078776",
+      "title": "Never Let Me Go",
+      "author": "Kazuo Ishiguro",
+      "genres": [
+        10,
+        19,
+        22
+      ],
+      "description": "Students at an English boarding school slowly learn what they were made for.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 18,
+    "fields": {
+      "isbn": "9780679731726",
+      "title": "The Remains of the Day",
+      "author": "Kazuo Ishiguro",
+      "genres": [
+        8,
+        10,
+        19
+      ],
+      "description": "An English butler takes a motoring holiday and reckons with a life spent in service.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 19,
+    "fields": {
+      "isbn": "9780756404741",
+      "title": "The Name of the Wind",
+      "author": "Patrick Rothfuss",
+      "genres": [
+        1,
+        7,
+        25
+      ],
+      "description": "A legendary figure tells the true story of how he became one.",
+      "age_rating": "Teen",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 20,
+    "fields": {
+      "isbn": "9780553383041",
+      "title": "A Wizard of Earthsea",
+      "author": "Ursula K. Le Guin",
+      "genres": [
+        3,
+        7,
+        25
+      ],
+      "description": "A gifted young mage looses a shadow into the world and must hunt it down.",
+      "age_rating": "All Ages",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 21,
+    "fields": {
+      "isbn": "9780765350381",
+      "title": "Mistborn: The Final Empire",
+      "author": "Brandon Sanderson",
+      "genres": [
+        1,
+        7,
+        24
+      ],
+      "description": "A street thief discovers she can burn metals for power, and joins a crew planning a heist against a god.",
+      "age_rating": "Teen",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 22,
+    "fields": {
+      "isbn": "9780316229296",
+      "title": "The Fifth Season",
+      "author": "N.K. Jemisin",
+      "genres": [
+        7,
+        10,
+        18
+      ],
+      "description": "In a world that ends regularly, a woman searches for her daughter across a breaking continent.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 23,
+    "fields": {
+      "isbn": "9781635575637",
+      "title": "Piranesi",
+      "author": "Susanna Clarke",
+      "genres": [
+        7,
+        11,
+        13
+      ],
+      "description": "A man lives in an infinite house of statues and tides, keeping careful notes.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 24,
+    "fields": {
+      "isbn": "9781250301697",
+      "title": "The Silent Patient",
+      "author": "Alex Michaelides",
+      "genres": [
+        13,
+        19,
+        24
+      ],
+      "description": "A woman shoots her husband and never speaks again; a therapist becomes obsessed with why.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 25,
+    "fields": {
+      "isbn": "9780307588371",
+      "title": "Gone Girl",
+      "author": "Gillian Flynn",
+      "genres": [
+        13,
+        19,
+        24
+      ],
+      "description": "A wife disappears on her anniversary and her husband becomes the story.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 26,
+    "fields": {
+      "isbn": "9780307454546",
+      "title": "The Girl with the Dragon Tattoo",
+      "author": "Stieg Larsson",
+      "genres": [
+        5,
+        13,
+        24
+      ],
+      "description": "A disgraced journalist and a brilliant hacker investigate a disappearance forty years cold.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 27,
+    "fields": {
+      "isbn": "9780394758282",
+      "title": "The Big Sleep",
+      "author": "Raymond Chandler",
+      "genres": [
+        3,
+        5,
+        13
+      ],
+      "description": "Philip Marlowe takes a blackmail case in Los Angeles and finds the rot goes deeper.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 28,
+    "fields": {
+      "isbn": "9780679745587",
+      "title": "In Cold Blood",
+      "author": "Truman Capote",
+      "genres": [
+        5,
+        10,
+        14
+      ],
+      "description": "The murder of a Kansas family, reconstructed in forensic and unsettling detail.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 29,
+    "fields": {
+      "isbn": "9780062073563",
+      "title": "The Murder of Roger Ackroyd",
+      "author": "Agatha Christie",
+      "genres": [
+        3,
+        5,
+        13
+      ],
+      "description": "Poirot retires to a quiet village, where a murder promptly refuses to let him.",
+      "age_rating": "All Ages",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 30,
+    "fields": {
+      "isbn": "9780062316097",
+      "title": "Sapiens: A Brief History of Humankind",
+      "author": "Yuval Noah Harari",
+      "genres": [
+        14,
+        15,
+        21
+      ],
+      "description": "A sweeping account of how an unremarkable ape came to run the planet.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 31,
+    "fields": {
+      "isbn": "9780374533557",
+      "title": "Thinking, Fast and Slow",
+      "author": "Daniel Kahneman",
+      "genres": [
+        14,
+        19,
+        21
+      ],
+      "description": "The two systems that drive how we think, and the biases baked into both.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 32,
+    "fields": {
+      "isbn": "9780198788607",
+      "title": "The Selfish Gene",
+      "author": "Richard Dawkins",
+      "genres": [
+        14,
+        15,
+        21
+      ],
+      "description": "Evolution retold from the gene's point of view.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 33,
+    "fields": {
+      "isbn": "9780767908184",
+      "title": "A Short History of Nearly Everything",
+      "author": "Bill Bryson",
+      "genres": [
+        4,
+        14,
+        21
+      ],
+      "description": "How we came to know what we know about the universe, told with genuine delight.",
+      "age_rating": "All Ages",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 34,
+    "fields": {
+      "isbn": "9780399590504",
+      "title": "Educated",
+      "author": "Tara Westover",
+      "genres": [
+        2,
+        12,
+        14
+      ],
+      "description": "A woman raised off-grid in Idaho teaches herself enough to reach Cambridge.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 35,
+    "fields": {
+      "isbn": "9780553577129",
+      "title": "The Diary of a Young Girl",
+      "author": "Anne Frank",
+      "genres": [
+        2,
+        8,
+        12
+      ],
+      "description": "Two years in a concealed annex, recorded by a girl who wanted to be a writer.",
+      "age_rating": "Teen",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 36,
+    "fields": {
+      "isbn": "9780807014295",
+      "title": "Man's Search for Meaning",
+      "author": "Viktor E. Frankl",
+      "genres": [
+        12,
+        15,
+        19
+      ],
+      "description": "A psychiatrist's account of the camps, and of the freedom that cannot be taken.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 37,
+    "fields": {
+      "isbn": "9780140449334",
+      "title": "Meditations",
+      "author": "Marcus Aurelius",
+      "genres": [
+        3,
+        14,
+        15
+      ],
+      "description": "The private notebooks of a Roman emperor talking himself into being decent.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 38,
+    "fields": {
+      "isbn": "9780374515362",
+      "title": "The Complete Stories",
+      "author": "Flannery O'Connor",
+      "genres": [
+        3,
+        10,
+        23
+      ],
+      "description": "Thirty-one stories of grace arriving in the least comfortable way possible.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 39,
+    "fields": {
+      "isbn": "9780618101368",
+      "title": "Interpreter of Maladies",
+      "author": "Jhumpa Lahiri",
+      "genres": [
+        4,
+        10,
+        23
+      ],
+      "description": "Nine stories about distance, between countries and between people in the same room.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.book",
+    "pk": 40,
+    "fields": {
+      "isbn": "9780571247042",
+      "title": "The Waste Land and Other Poems",
+      "author": "T.S. Eliot",
+      "genres": [
+        3,
+        10,
+        16
+      ],
+      "description": "The poem that fractured English verse, with its companions.",
+      "age_rating": "Adult",
+      "cover_image": ""
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 1,
+    "fields": {
+      "book": 1,
+      "library": 2,
+      "total_copies": 3,
+      "available_copies": 3
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 2,
+    "fields": {
+      "book": 1,
+      "library": 3,
+      "total_copies": 2,
+      "available_copies": 2
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 3,
+    "fields": {
+      "book": 2,
+      "library": 3,
+      "total_copies": 2,
+      "available_copies": 2
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 4,
+    "fields": {
+      "book": 3,
+      "library": 4,
+      "total_copies": 5,
+      "available_copies": 3
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 5,
+    "fields": {
+      "book": 3,
+      "library": 1,
+      "total_copies": 1,
+      "available_copies": 0
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 6,
+    "fields": {
+      "book": 4,
+      "library": 1,
+      "total_copies": 1,
+      "available_copies": 1
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 7,
+    "fields": {
+      "book": 4,
+      "library": 2,
+      "total_copies": 4,
+      "available_copies": 4
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 8,
+    "fields": {
+      "book": 4,
+      "library": 3,
+      "total_copies": 3,
+      "available_copies": 3
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 9,
+    "fields": {
+      "book": 5,
+      "library": 2,
+      "total_copies": 4,
+      "available_copies": 4
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 10,
+    "fields": {
+      "book": 5,
+      "library": 3,
+      "total_copies": 3,
+      "available_copies": 3
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 11,
+    "fields": {
+      "book": 6,
+      "library": 3,
+      "total_copies": 3,
+      "available_copies": 1
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 12,
+    "fields": {
+      "book": 7,
+      "library": 4,
+      "total_copies": 2,
+      "available_copies": 0
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 13,
+    "fields": {
+      "book": 7,
+      "library": 1,
+      "total_copies": 5,
+      "available_copies": 0
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 14,
+    "fields": {
+      "book": 8,
+      "library": 1,
+      "total_copies": 5,
+      "available_copies": 5
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 15,
+    "fields": {
+      "book": 8,
+      "library": 2,
+      "total_copies": 1,
+      "available_copies": 1
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 16,
+    "fields": {
+      "book": 8,
+      "library": 3,
+      "total_copies": 4,
+      "available_copies": 4
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 17,
+    "fields": {
+      "book": 9,
+      "library": 2,
+      "total_copies": 1,
+      "available_copies": 0
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 18,
+    "fields": {
+      "book": 9,
+      "library": 3,
+      "total_copies": 4,
+      "available_copies": 2
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 19,
+    "fields": {
+      "book": 10,
+      "library": 3,
+      "total_copies": 4,
+      "available_copies": 4
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 20,
+    "fields": {
+      "book": 11,
+      "library": 4,
+      "total_copies": 3,
+      "available_copies": 3
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 21,
+    "fields": {
+      "book": 11,
+      "library": 1,
+      "total_copies": 2,
+      "available_copies": 2
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 22,
+    "fields": {
+      "book": 12,
+      "library": 1,
+      "total_copies": 2,
+      "available_copies": 0
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 23,
+    "fields": {
+      "book": 12,
+      "library": 2,
+      "total_copies": 5,
+      "available_copies": 3
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 24,
+    "fields": {
+      "book": 12,
+      "library": 3,
+      "total_copies": 1,
+      "available_copies": 0
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 25,
+    "fields": {
+      "book": 13,
+      "library": 2,
+      "total_copies": 5,
+      "available_copies": 5
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 26,
+    "fields": {
+      "book": 13,
+      "library": 3,
+      "total_copies": 1,
+      "available_copies": 1
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 27,
+    "fields": {
+      "book": 14,
+      "library": 3,
+      "total_copies": 1,
+      "available_copies": 0
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 28,
+    "fields": {
+      "book": 15,
+      "library": 4,
+      "total_copies": 4,
+      "available_copies": 2
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 29,
+    "fields": {
+      "book": 15,
+      "library": 1,
+      "total_copies": 3,
+      "available_copies": 1
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 30,
+    "fields": {
+      "book": 16,
+      "library": 1,
+      "total_copies": 3,
+      "available_copies": 3
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 31,
+    "fields": {
+      "book": 16,
+      "library": 2,
+      "total_copies": 2,
+      "available_copies": 2
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 32,
+    "fields": {
+      "book": 16,
+      "library": 3,
+      "total_copies": 5,
+      "available_copies": 5
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 33,
+    "fields": {
+      "book": 17,
+      "library": 2,
+      "total_copies": 2,
+      "available_copies": 2
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 34,
+    "fields": {
+      "book": 17,
+      "library": 3,
+      "total_copies": 5,
+      "available_copies": 5
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 35,
+    "fields": {
+      "book": 18,
+      "library": 3,
+      "total_copies": 5,
+      "available_copies": 3
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 36,
+    "fields": {
+      "book": 19,
+      "library": 4,
+      "total_copies": 1,
+      "available_copies": 1
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 37,
+    "fields": {
+      "book": 19,
+      "library": 1,
+      "total_copies": 4,
+      "available_copies": 4
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 38,
+    "fields": {
+      "book": 20,
+      "library": 1,
+      "total_copies": 4,
+      "available_copies": 4
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 39,
+    "fields": {
+      "book": 20,
+      "library": 2,
+      "total_copies": 3,
+      "available_copies": 3
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 40,
+    "fields": {
+      "book": 20,
+      "library": 3,
+      "total_copies": 2,
+      "available_copies": 2
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 41,
+    "fields": {
+      "book": 21,
+      "library": 2,
+      "total_copies": 3,
+      "available_copies": 0
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 42,
+    "fields": {
+      "book": 21,
+      "library": 3,
+      "total_copies": 2,
+      "available_copies": 0
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 43,
+    "fields": {
+      "book": 22,
+      "library": 3,
+      "total_copies": 2,
+      "available_copies": 2
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 44,
+    "fields": {
+      "book": 23,
+      "library": 4,
+      "total_copies": 5,
+      "available_copies": 5
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 45,
+    "fields": {
+      "book": 23,
+      "library": 1,
+      "total_copies": 1,
+      "available_copies": 1
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 46,
+    "fields": {
+      "book": 24,
+      "library": 1,
+      "total_copies": 1,
+      "available_copies": 0
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 47,
+    "fields": {
+      "book": 24,
+      "library": 2,
+      "total_copies": 4,
+      "available_copies": 2
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 48,
+    "fields": {
+      "book": 24,
+      "library": 3,
+      "total_copies": 3,
+      "available_copies": 1
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 49,
+    "fields": {
+      "book": 25,
+      "library": 2,
+      "total_copies": 4,
+      "available_copies": 4
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 50,
+    "fields": {
+      "book": 25,
+      "library": 3,
+      "total_copies": 3,
+      "available_copies": 3
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 51,
+    "fields": {
+      "book": 26,
+      "library": 3,
+      "total_copies": 3,
+      "available_copies": 3
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 52,
+    "fields": {
+      "book": 27,
+      "library": 4,
+      "total_copies": 2,
+      "available_copies": 0
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 53,
+    "fields": {
+      "book": 27,
+      "library": 1,
+      "total_copies": 5,
+      "available_copies": 3
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 54,
+    "fields": {
+      "book": 28,
+      "library": 1,
+      "total_copies": 5,
+      "available_copies": 0
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 55,
+    "fields": {
+      "book": 28,
+      "library": 2,
+      "total_copies": 1,
+      "available_copies": 0
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 56,
+    "fields": {
+      "book": 28,
+      "library": 3,
+      "total_copies": 4,
+      "available_copies": 0
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 57,
+    "fields": {
+      "book": 29,
+      "library": 2,
+      "total_copies": 1,
+      "available_copies": 1
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 58,
+    "fields": {
+      "book": 29,
+      "library": 3,
+      "total_copies": 4,
+      "available_copies": 4
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 59,
+    "fields": {
+      "book": 30,
+      "library": 3,
+      "total_copies": 4,
+      "available_copies": 2
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 60,
+    "fields": {
+      "book": 31,
+      "library": 4,
+      "total_copies": 3,
+      "available_copies": 3
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 61,
+    "fields": {
+      "book": 31,
+      "library": 1,
+      "total_copies": 2,
+      "available_copies": 2
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 62,
+    "fields": {
+      "book": 32,
+      "library": 1,
+      "total_copies": 2,
+      "available_copies": 2
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 63,
+    "fields": {
+      "book": 32,
+      "library": 2,
+      "total_copies": 5,
+      "available_copies": 5
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 64,
+    "fields": {
+      "book": 32,
+      "library": 3,
+      "total_copies": 1,
+      "available_copies": 1
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 65,
+    "fields": {
+      "book": 33,
+      "library": 2,
+      "total_copies": 5,
+      "available_copies": 3
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 66,
+    "fields": {
+      "book": 33,
+      "library": 3,
+      "total_copies": 1,
+      "available_copies": 0
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 67,
+    "fields": {
+      "book": 34,
+      "library": 3,
+      "total_copies": 1,
+      "available_copies": 1
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 68,
+    "fields": {
+      "book": 35,
+      "library": 4,
+      "total_copies": 4,
+      "available_copies": 0
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 69,
+    "fields": {
+      "book": 35,
+      "library": 1,
+      "total_copies": 3,
+      "available_copies": 0
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 70,
+    "fields": {
+      "book": 36,
+      "library": 1,
+      "total_copies": 3,
+      "available_copies": 1
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 71,
+    "fields": {
+      "book": 36,
+      "library": 2,
+      "total_copies": 2,
+      "available_copies": 0
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 72,
+    "fields": {
+      "book": 36,
+      "library": 3,
+      "total_copies": 5,
+      "available_copies": 3
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 73,
+    "fields": {
+      "book": 37,
+      "library": 2,
+      "total_copies": 2,
+      "available_copies": 2
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 74,
+    "fields": {
+      "book": 37,
+      "library": 3,
+      "total_copies": 5,
+      "available_copies": 5
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 75,
+    "fields": {
+      "book": 38,
+      "library": 3,
+      "total_copies": 5,
+      "available_copies": 5
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 76,
+    "fields": {
+      "book": 39,
+      "library": 4,
+      "total_copies": 1,
+      "available_copies": 0
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 77,
+    "fields": {
+      "book": 39,
+      "library": 1,
+      "total_copies": 4,
+      "available_copies": 2
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 78,
+    "fields": {
+      "book": 40,
+      "library": 1,
+      "total_copies": 4,
+      "available_copies": 4
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 79,
+    "fields": {
+      "book": 40,
+      "library": 2,
+      "total_copies": 3,
+      "available_copies": 3
+    }
+  },
+  {
+    "model": "catalog.bookinventory",
+    "pk": 80,
+    "fields": {
+      "book": 40,
+      "library": 3,
+      "total_copies": 2,
+      "available_copies": 2
+    }
+  }
+]

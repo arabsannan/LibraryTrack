@@ -150,3 +150,84 @@ class BookDetailViewTests(TestCase):
         response = self.client.get(reverse("catalog:book_detail", args=[self.dune.isbn]))
         recent = [b.isbn for b in response.context["recently_viewed_books"]]
         self.assertEqual(recent.count("111"), 1)
+
+
+class PaginationTests(TestCase):
+    def setUp(self):
+        self.library = Library.objects.create(name="Central")
+        for i in range(30):
+            book = Book.objects.create(isbn=f"isbn-{i:03d}", title=f"Book {i:03d}", author="Author")
+            BookInventory.objects.create(
+                book=book, library=self.library, total_copies=2, available_copies=2
+            )
+        self.url = reverse("catalog:home")
+
+    def test_first_page_is_capped(self):
+        response = self.client.get(self.url)
+        self.assertTrue(response.context["is_paginated"])
+        self.assertEqual(len(response.context["books"]), 12)
+        self.assertEqual(response.context["paginator"].count, 30)
+        self.assertEqual(response.context["paginator"].num_pages, 3)
+
+    def test_last_page_has_remainder(self):
+        response = self.client.get(self.url, {"page": 3})
+        self.assertEqual(len(response.context["books"]), 6)
+
+    def test_first_page_renders_without_previous_link(self):
+        # Guards against EmptyPage being raised by previous_page_number on page 1.
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_last_page_renders_without_next_link(self):
+        response = self.client.get(self.url, {"page": 3})
+        self.assertEqual(response.status_code, 200)
+
+    def test_out_of_range_page_returns_404(self):
+        response = self.client.get(self.url, {"page": 99})
+        self.assertEqual(response.status_code, 404)
+
+    def test_filters_survive_pagination(self):
+        response = self.client.get(self.url, {"q": "Book 0", "page": 1})
+        self.assertContains(response, "q=Book+0")
+
+
+class TemplateRenderingTests(TestCase):
+    """Assert on rendered HTML, not just context.
+
+    The view context can be correct while the template reads a field that no
+    longer exists -- Django templates fail silently, so only rendering catches it.
+    """
+
+    def setUp(self):
+        self.library = Library.objects.create(name="Central")
+        self.scifi = Genre.objects.create(name="Sci-Fi")
+        self.adventure = Genre.objects.create(name="Adventure")
+        self.dune = Book.objects.create(isbn="111", title="Dune", author="Frank Herbert")
+        self.dune.genres.set([self.scifi, self.adventure])
+        BookInventory.objects.create(
+            book=self.dune, library=self.library, total_copies=3, available_copies=3
+        )
+
+    def test_detail_page_renders_every_genre(self):
+        response = self.client.get(reverse("catalog:book_detail", args=[self.dune.isbn]))
+        self.assertContains(response, "Sci-Fi")
+        self.assertContains(response, "Adventure")
+
+    def test_detail_page_does_not_claim_genres_are_unset(self):
+        response = self.client.get(reverse("catalog:book_detail", args=[self.dune.isbn]))
+        self.assertNotContains(response, "No genres set")
+
+    def test_book_with_no_genres_shows_placeholder(self):
+        bare = Book.objects.create(isbn="999", title="Untagged", author="Nobody")
+        response = self.client.get(reverse("catalog:book_detail", args=[bare.isbn]))
+        self.assertContains(response, "No genres set")
+
+    def test_list_page_renders_genre_badges(self):
+        response = self.client.get(reverse("catalog:home"))
+        self.assertContains(response, "Sci-Fi")
+        self.assertContains(response, "Adventure")
+
+    def test_list_page_renders_availability(self):
+        response = self.client.get(reverse("catalog:home"))
+        self.assertContains(response, "Central")
+        self.assertContains(response, "3/3 available")
