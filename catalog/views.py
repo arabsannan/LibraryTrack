@@ -7,6 +7,7 @@ class HomeView(ListView):
 	model = Book
 	template_name = "catalog/home.html"
 	context_object_name = "books"
+	paginate_by = 12
 
 	def dispatch(self, request, *args, **kwargs):
 		request.session["visit_count"] = request.session.get("visit_count", 0) + 1

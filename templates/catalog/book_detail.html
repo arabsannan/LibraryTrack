@@ -5,7 +5,13 @@
     <h1 class="h3">{{ book.title }}</h1>
     <p class="text-muted mb-1">By {{ book.author }}</p>
     <p>ISBN: {{ book.isbn }}</p>
-    <p>Genre: {{ book.genre|default:"Not set" }}</p>
+    <p class="mb-2">
+      {% for genre in book.genres.all %}
+        <a href="{% url 'catalog:home' %}?genre={{ genre.name|urlencode }}" class="badge text-bg-secondary text-decoration-none">{{ genre.name }}</a>
+      {% empty %}
+        <span class="text-muted">No genres set</span>
+      {% endfor %}
+    </p>
     <p>{{ book.description|default:"No description provided." }}</p>
   </div>
 </div>
