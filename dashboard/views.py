@@ -35,9 +35,13 @@ class AdminDashboardView(LoginRequiredMixin, TemplateView):
     template_name = "dashboard/admin.html"
 
     def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+
         if not LibraryAdmin.objects.filter(user=request.user).exists():
             messages.error(request, "You do not have a library admin assignment.")
             return redirect("catalog:home")
+
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):

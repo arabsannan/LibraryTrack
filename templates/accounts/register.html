@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-6">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h1 class="h4 mb-4">Create your account</h1>
+        <form method="post" enctype="multipart/form-data" class="vstack gap-3">
+          {% csrf_token %}
+
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+          {% endif %}
+
+          <div>
+            <label class="form-label">Username</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+              <div class="text-danger small mt-1">{{ form.username.errors }}</div>
+            {% endif %}
+          </div>
+
+          <div>
+            <label class="form-label">Email</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+              <div class="text-danger small mt-1">{{ form.email.errors }}</div>
+            {% endif %}
+          </div>
+
+          <div>
+            <label class="form-label">Password</label>
+            {{ form.password }}
+            {% if form.password.errors %}
+              <div class="text-danger small mt-1">{{ form.password.errors }}</div>
+            {% endif %}
+          </div>
+
+          <div>
+            <label class="form-label">Confirm password</label>
+            {{ form.confirm_password }}
+            {% if form.confirm_password.errors %}
+              <div class="text-danger small mt-1">{{ form.confirm_password.errors }}</div>
+            {% endif %}
+          </div>
+
+          <div>
+            <label class="form-label">Age (optional)</label>
+            {{ form.age }}
+            {% if form.age.errors %}
+              <div class="text-danger small mt-1">{{ form.age.errors }}</div>
+            {% endif %}
+          </div>
+
+          <div>
+            <label class="form-label">Profile photo (optional)</label>
+            {{ form.profile_photo }}
+            {% if form.profile_photo.errors %}
+              <div class="text-danger small mt-1">{{ form.profile_photo.errors }}</div>
+            {% endif %}
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100">Register</button>
+        </form>
+
+        <p class="text-muted mt-3 mb-0">
+          Already have an account? <a href="{% url 'accounts:login' %}">Log in</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

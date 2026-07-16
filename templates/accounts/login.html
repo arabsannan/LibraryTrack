@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-5">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h1 class="h4 mb-4">Log in to LibraryTrack</h1>
+        <form method="post" class="vstack gap-3">
+          {% csrf_token %}
+
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+          {% endif %}
+
+          <div>
+            <label class="form-label">Username</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+              <div class="text-danger small mt-1">{{ form.username.errors }}</div>
+            {% endif %}
+          </div>
+
+          <div>
+            <label class="form-label">Password</label>
+            {{ form.password }}
+            {% if form.password.errors %}
+              <div class="text-danger small mt-1">{{ form.password.errors }}</div>
+            {% endif %}
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100">Log in</button>
+        </form>
+
+        <p class="text-muted mt-3 mb-0">
+          Don't have an account? <a href="{% url 'accounts:register' %}">Register</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
