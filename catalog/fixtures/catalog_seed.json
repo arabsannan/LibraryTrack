@@ -187,7 +187,7 @@
     "model": "catalog.library",
     "pk": 2,
     "fields": {
-      "name": "Riverside Branch",
+      "name": "Riverside Library",
       "address": "6305 Wyandotte St E, Windsor, ON N8S 1M9",
       "contact_information": "riverside@librarytrack.example.ca | (519) 255-6773"
     }
@@ -196,7 +196,7 @@
     "model": "catalog.library",
     "pk": 3,
     "fields": {
-      "name": "Sandwich Branch",
+      "name": "Sandwich Library",
       "address": "3312 Sandwich St, Windsor, ON N9C 1A9",
       "contact_information": "sandwich@librarytrack.example.ca | (519) 255-6774"
     }
@@ -205,7 +205,7 @@
     "model": "catalog.library",
     "pk": 4,
     "fields": {
-      "name": "Fontainebleau Branch",
+      "name": "Fontainebleau Library",
       "address": "8200 Wyandotte St E, Windsor, ON N8S 1T6",
       "contact_information": "fontainebleau@librarytrack.example.ca | (519) 255-6775"
     }

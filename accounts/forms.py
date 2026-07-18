@@ -4,6 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm, Set
 
 from .models import UserProfile
 
+
 class StyledPasswordResetForm(PasswordResetForm):
     """The 'enter your email' step, with our input styling."""
     email = forms.EmailField(
@@ -14,6 +15,7 @@ class StyledPasswordResetForm(PasswordResetForm):
             "autocomplete": "email",
         }),
     )
+
 
 class StyledSetPasswordForm(SetPasswordForm):
     """The 'choose a new password' step, with our input styling."""
@@ -30,10 +32,12 @@ class StyledSetPasswordForm(SetPasswordForm):
 
 class RegisterForm(forms.ModelForm):
     # Extra fields not on the User model
-    password = forms.CharField(widget=forms.PasswordInput)
-    confirm_password = forms.CharField(widget=forms.PasswordInput)
-    age = forms.IntegerField(min_value=1, required=False)
-    profile_photo = forms.ImageField(required=False)
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"class": "form-control"}))
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={"class": "form-control"}))
+    age = forms.IntegerField(min_value=1, required=False,
+                             widget=forms.NumberInput(attrs={"class": "form-control"}))
+    profile_photo = forms.ImageField(required=False,
+                                     widget=forms.ClearableFileInput(attrs={"class": "form-control"}))
 
     class Meta:
         model = User
@@ -68,3 +72,7 @@ class EditProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ["age", "profile_photo"]
+        widgets = {
+            "age": forms.NumberInput(attrs={"class": "form-control"}),
+            "profile_photo": forms.ClearableFileInput(attrs={"class": "form-control"}),
+        }

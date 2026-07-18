@@ -1,5 +1,3 @@
-from django.urls import path
-from . import views
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 from django.urls import path, reverse_lazy
@@ -7,7 +5,7 @@ from django.urls import path, reverse_lazy
 from . import views
 from .forms import StyledPasswordResetForm, StyledSetPasswordForm
 
-app_name = 'accounts'
+app_name = "accounts"
 
 urlpatterns = [
     path("register/", views.RegisterView.as_view(), name="register"),
@@ -16,7 +14,16 @@ urlpatterns = [
     path("profile/", views.ProfileView.as_view(), name="profile"),
     path("profile/edit/", views.EditProfileView.as_view(), name="edit_profile"),
 
-path(
+    # --- Password reset -----------------------------------------------------
+    # Django's built-in views handle the token security; we supply our own
+    # templates and styled forms.
+    #
+    # The flow is: enter email -> we send a link -> the link redirects to a
+    # "set-password" URL (the token is moved into the session at that point)
+    # -> choose a new password -> done. Because the token is single-use, an
+    # already-used or reloaded link correctly shows the "invalid or expired"
+    # screen, which offers a button to request a fresh one.
+    path(
         "password-reset/",
         auth_views.PasswordResetView.as_view(
             template_name="accounts/password_reset.html",
