@@ -54,14 +54,22 @@ class DonationRequest(models.Model):
 	def approve(self, library):
 		from catalog.models import Book, BookInventory
 
-		if not self.isbn:
-			raise ValueError("Donation requests need an ISBN to auto-create catalogue entries.")
-
 		with transaction.atomic():
-			book, _ = Book.objects.get_or_create(
-				isbn=self.isbn,
-				defaults={"title": self.title, "author": self.author},
-			)
+			# Match an existing catalogue book by ISBN when we have one, otherwise
+			# by title + author. This lets donations without an ISBN still be
+			# approved (a common case for older or self-published books).
+			book = None
+			if self.isbn:
+				book = Book.objects.filter(isbn=self.isbn).first()
+			if book is None:
+				book = Book.objects.filter(title__iexact=self.title, author__iexact=self.author).first()
+
+			if book is None:
+				# Create a new catalogue entry. If no ISBN was given, synthesise a
+				# stable placeholder so the unique ISBN constraint is satisfied.
+				isbn = self.isbn or f"DON-{self.pk}"
+				book = Book.objects.create(isbn=isbn, title=self.title, author=self.author)
+
 			inventory, created = BookInventory.objects.get_or_create(
 				book=book,
 				library=library,

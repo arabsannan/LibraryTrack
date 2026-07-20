@@ -134,3 +134,29 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'catalog:home'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Email configuration
+#
+# Out of the box we use the console backend, so password-reset links and
+# notifications print to the terminal running the server — no setup needed.
+#
+# To send real emails through Mailtrap's sandbox (for testing), set these
+# environment variables before running the server:
+#
+#   EMAIL_HOST=sandbox.smtp.mailtrap.io
+#   EMAIL_HOST_USER=<your mailtrap username>
+#   EMAIL_HOST_PASSWORD=<your mailtrap password>
+#   EMAIL_PORT=2525            (optional, this is the default)
+#
+# When EMAIL_HOST_USER is present we switch to the real SMTP backend
+# automatically.
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "LibraryTrack <no-reply@librarytrack.test>")
+
+if os.environ.get("EMAIL_HOST_USER"):
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_HOST = os.environ.get("EMAIL_HOST", "sandbox.smtp.mailtrap.io")
+    EMAIL_PORT = int(os.environ.get("EMAIL_PORT", "2525"))
+    EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
+    EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
+    EMAIL_USE_TLS = True
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
