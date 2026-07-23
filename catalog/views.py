@@ -10,7 +10,10 @@ class HomeView(ListView):
 	paginate_by = 12
 
 	def dispatch(self, request, *args, **kwargs):
-		request.session["visit_count"] = request.session.get("visit_count", 0) + 1
+		# Session visit tracking is a personalised feature, so we only count
+		# visits for signed-in users.
+		if request.user.is_authenticated:
+			request.session["visit_count"] = request.session.get("visit_count", 0) + 1
 		return super().dispatch(request, *args, **kwargs)
 
 	def get_queryset(self):
@@ -42,6 +45,10 @@ class HomeView(ListView):
 		context["libraries"] = Library.objects.all()
 		context["genres"] = Genre.objects.values_list("name", flat=True)
 		context["query_params"] = self.request.GET
+		# Preserve active filters across pagination links (drops the page param).
+		params = self.request.GET.copy()
+		params.pop("page", None)
+		context["querystring"] = params.urlencode()
 		return context
 
 
@@ -58,6 +65,28 @@ class BookDetailView(DetailView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context["inventories"] = self.object.inventories.select_related("library")
+
+		# Which of this book's inventories is the current user already waitlisted on,
+		# and which do they already have an active request for? Used to show
+		# "Joined" / "Pending" states instead of the action buttons.
+		if self.request.user.is_authenticated:
+			from borrowing.models import BorrowRecord, WaitlistEntry
+			context["waitlisted_ids"] = set(
+				WaitlistEntry.objects.filter(
+					user=self.request.user,
+					book_inventory__book=self.object,
+				).values_list("book_inventory_id", flat=True)
+			)
+			context["borrow_status"] = dict(
+				BorrowRecord.objects.filter(
+					user=self.request.user,
+					book_inventory__book=self.object,
+					status__in=["pending", "approved", "overdue"],
+				).values_list("book_inventory_id", "status")
+			)
+		else:
+			context["waitlisted_ids"] = set()
+			context["borrow_status"] = {}
 
 		recently_viewed = self.request.session.get("recently_viewed_books", [])
 		recently_viewed = [isbn for isbn in recently_viewed if isbn != self.object.isbn]
