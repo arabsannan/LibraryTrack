@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Add a book · LibraryTrack{% endblock %}
+{% block content %}
+
+<a href="{% url 'dashboard:admin' %}" class="lt-link" style="padding-left:0; margin-bottom:0.8rem;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+  Back to console
+</a>
+
+<div class="narrow-wide">
+  <div class="card card-lg">
+    <span class="eyebrow">{{ library.name }}</span>
+    <h1 style="font-size:1.55rem; font-weight:800; margin:0.5rem 0 0.4rem;">Add a book</h1>
+    <p class="form-hint mb-3">If this ISBN is already in the catalogue, your copies are added to it. Otherwise a new book is created and stocked at your library.</p>
+
+    <form method="post" class="form-stack">
+      {% csrf_token %}
+      {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+
+      <div class="field">
+        <label class="field-label">ISBN</label>
+        {{ form.isbn }}
+        {% if form.isbn.errors %}<div class="field-error">{{ form.isbn.errors }}</div>{% endif %}
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label class="field-label">Title</label>
+          {{ form.title }}
+          {% if form.title.errors %}<div class="field-error">{{ form.title.errors }}</div>{% endif %}
+        </div>
+        <div class="field">
+          <label class="field-label">Author</label>
+          {{ form.author }}
+          {% if form.author.errors %}<div class="field-error">{{ form.author.errors }}</div>{% endif %}
+        </div>
+      </div>
+      <div class="field">
+        <label class="field-label">Genres <span class="faint">(optional)</span></label>
+        {{ form.genres }}
+        <span class="form-hint">{{ form.genres.help_text }}</span>
+      </div>
+      <div class="field">
+        <label class="field-label">Description <span class="faint">(optional)</span></label>
+        {{ form.description }}
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label class="field-label">Age rating <span class="faint">(optional)</span></label>
+          {{ form.age_rating }}
+        </div>
+        <div class="field">
+          <label class="field-label">Total copies at your library</label>
+          {{ form.total_copies }}
+          {% if form.total_copies.errors %}<div class="field-error">{{ form.total_copies.errors }}</div>{% endif %}
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block">Add to library</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,80 +1,160 @@
 {% extends "base.html" %}
+{% block title %}Manage {{ library.name }} · LibraryTrack{% endblock %}
 {% block content %}
-<h1 class="h3 mb-3">Admin dashboard - {{ library.name }}</h1>
 
-<div class="row g-4">
-  <div class="col-lg-4">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h2 class="h5">Inventory</h2>
-        <ul>
-          {% for item in inventory %}
-            <li>{{ item.book.title }}: {{ item.available_copies }}/{{ item.total_copies }}</li>
-          {% empty %}
-            <li>No inventory assigned to this library.</li>
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
+<div class="section-head">
+  <div>
+    <span class="eyebrow">Admin console</span>
+    <h1 style="font-size:1.9rem; margin-top:0.3rem;">{{ library.name }}</h1>
+    {% if library.address %}<p class="muted" style="margin:0;">{{ library.address }}</p>{% endif %}
   </div>
-  <div class="col-lg-4">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h2 class="h5">Pending borrows</h2>
-        <ul>
+  <a href="{% url 'dashboard:add_book' %}" class="btn btn-primary btn-sm">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+    Add a book
+  </a>
+</div>
+
+<section class="section stat-grid">
+  <div class="stat-tile">
+    <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></div>
+    <div class="n">{{ inventory_count }}</div>
+    <div class="l">Titles stocked</div>
+  </div>
+  <div class="stat-tile">
+    <div class="stat-icon" style="color:#977c2b; background:rgba(251,238,184,0.5);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+    <div class="n">{{ pending_count }}</div>
+    <div class="l">Pending borrows</div>
+  </div>
+  <div class="stat-tile">
+    <div class="stat-icon" style="color:#c76b8e; background:rgba(239,184,205,0.3);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></div>
+    <div class="n">{{ overdue_count }}</div>
+    <div class="l">Overdue loans</div>
+  </div>
+  <div class="stat-tile">
+    <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
+    <div class="n">{{ requests_count }}</div>
+    <div class="l">Open requests</div>
+  </div>
+</section>
+
+<section class="section card">
+  <span class="eyebrow mb-3">Pending borrow requests</span>
+  {% if pending_borrows %}
+    <div class="table-wrap">
+      <table class="lt-table">
+        <thead><tr><th>Member</th><th>Title</th><th>Requested</th><th style="text-align:right;">Decision</th></tr></thead>
+        <tbody>
           {% for record in pending_borrows %}
-            <li>{{ record.user.username }} requested {{ record.book_inventory.book.title }}</li>
-          {% empty %}
-            <li>No pending borrow requests.</li>
+            <tr>
+              <td style="font-weight:600;">{{ record.user.username }}</td>
+              <td>{{ record.book_inventory.book.title }}</td>
+              <td class="muted">{{ record.request_date|date:"M j" }}</td>
+              <td>
+                <div class="row-flex gap-2 justify-end">
+                  <form method="post" action="{% url 'borrowing:approve_borrow' record.id %}" style="margin:0;">{% csrf_token %}<button class="btn btn-primary btn-sm" type="submit" data-pending-label="Approving...">Approve</button></form>
+                  <form method="post" action="{% url 'borrowing:reject_borrow' record.id %}" style="margin:0;">{% csrf_token %}<button class="btn btn-danger btn-sm" type="submit" data-pending-label="Declining...">Decline</button></form>
+                </div>
+              </td>
+            </tr>
           {% endfor %}
-        </ul>
-      </div>
+        </tbody>
+      </table>
     </div>
-  </div>
-  <div class="col-lg-4">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h2 class="h5">Overdue items</h2>
-        <ul>
-          {% for record in overdue_borrows %}
-            <li>{{ record.user.username }} - {{ record.book_inventory.book.title }}</li>
-          {% empty %}
-            <li>No overdue loans.</li>
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
+  {% else %}
+    <p class="empty-note">No borrow requests waiting.</p>
+  {% endif %}
+</section>
 
-<div class="row g-4 mt-1">
-  <div class="col-md-6">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h2 class="h5">Pending donation requests</h2>
-        <ul>
-          {% for item in donation_requests %}
-            <li>{{ item.title }} by {{ item.user.username }}</li>
+<section class="section split">
+  <div class="card">
+    <span class="eyebrow mb-3">Donation requests</span>
+    {% if donation_requests %}
+      <ul class="list-clean">
+        {% for item in donation_requests %}
+          <li style="align-items:flex-start;">
+            <div>
+              <strong>{{ item.title }}</strong>
+              <div class="faint" style="font-size:0.82rem;">by {{ item.author }} · from {{ item.user.username }} · {{ item.condition }}</div>
+            </div>
+            <div class="row-flex gap-2">
+              <form method="post" action="{% url 'requests:approve_donation' item.id %}" style="margin:0;">{% csrf_token %}<button class="btn btn-primary btn-sm" type="submit" data-pending-label="Accepting...">Accept</button></form>
+              <form method="post" action="{% url 'requests:reject_donation' item.id %}" style="margin:0;">{% csrf_token %}<button class="btn btn-danger btn-sm" type="submit" data-pending-label="Rejecting...">Reject</button></form>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="empty-note">No donation requests.</p>
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <span class="eyebrow mb-3">Purchase requests</span>
+    {% if purchase_requests %}
+      <ul class="list-clean">
+        {% for item in purchase_requests %}
+          <li style="align-items:flex-start;">
+            <div>
+              <strong>{{ item.book_title }}</strong>
+              <div class="faint" style="font-size:0.82rem;">from {{ item.user.username }}</div>
+            </div>
+            <div class="row-flex gap-2">
+              <form method="post" action="{% url 'requests:decide_purchase' item.id 'approve' %}" style="margin:0;">{% csrf_token %}<button class="btn btn-primary btn-sm" type="submit" data-pending-label="Approving...">Approve</button></form>
+              <form method="post" action="{% url 'requests:decide_purchase' item.id 'reject' %}" style="margin:0;">{% csrf_token %}<button class="btn btn-danger btn-sm" type="submit" data-pending-label="Declining...">Decline</button></form>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="empty-note">No purchase requests.</p>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section split">
+  <div class="card">
+    <span class="eyebrow mb-3">Inventory</span>
+    <div class="table-wrap">
+      <table class="lt-table">
+        <thead><tr><th>Title</th><th style="text-align:center;">Available / Total</th><th style="text-align:right;">Adjust copies</th></tr></thead>
+        <tbody>
+          {% for item in inventory %}
+            <tr>
+              <td style="font-weight:600;">{{ item.book.title }}</td>
+              <td style="text-align:center;"><span class="chip {% if item.available_copies %}chip-ok{% else %}chip-out{% endif %}">{{ item.available_copies }} / {{ item.total_copies }}</span></td>
+              <td style="text-align:right;">
+                <form method="post" action="{% url 'dashboard:adjust_copies' %}" class="row-flex gap-2 justify-end" style="margin:0;">
+                  {% csrf_token %}
+                  <input type="hidden" name="inventory_id" value="{{ item.id }}">
+                  <input type="number" name="copies" value="1" min="1" class="form-control" style="width:66px; padding:0.35rem 0.5rem;">
+                  <button class="btn btn-soft btn-sm" type="submit" name="action" value="add" title="Add copies">Add</button>
+                  <button class="btn btn-danger btn-sm" type="submit" name="action" value="remove" title="Remove copies"{% if not item.available_copies %} disabled{% endif %}>Remove</button>
+                </form>
+              </td>
+            </tr>
           {% empty %}
-            <li>No donation requests.</li>
+            <tr><td colspan="3" class="empty-note">No inventory assigned to this library.</td></tr>
           {% endfor %}
-        </ul>
-      </div>
+        </tbody>
+      </table>
     </div>
   </div>
-  <div class="col-md-6">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h2 class="h5">Pending purchase requests</h2>
-        <ul>
-          {% for item in purchase_requests %}
-            <li>{{ item.book_title }} by {{ item.user.username }}</li>
-          {% empty %}
-            <li>No purchase requests.</li>
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
+
+  <div class="card">
+    <span class="eyebrow mb-3">Overdue loans</span>
+    {% if overdue_borrows %}
+      <ul class="list-clean">
+        {% for record in overdue_borrows %}
+          <li>
+            <span><strong>{{ record.user.username }}</strong> <span class="faint">· {{ record.book_inventory.book.title }}</span></span>
+            <span class="status-pill status-overdue">due {{ record.due_date|date:"M j" }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="empty-note">Nothing overdue.</p>
+    {% endif %}
   </div>
-</div>
+</section>
+
 {% endblock %}

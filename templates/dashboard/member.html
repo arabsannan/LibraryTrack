@@ -1,36 +1,171 @@
 {% extends "base.html" %}
+{% block title %}My dashboard · LibraryTrack{% endblock %}
 {% block content %}
-<h1 class="h3 mb-3">Member dashboard</h1>
-<p class="text-muted">Session visits: {{ visit_count }}</p>
 
-<div class="row g-4">
-  <div class="col-md-6">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h2 class="h5">Active loans</h2>
-        <ul>
-          {% for record in active_loans %}
-            <li>{{ record.book_inventory.book.title }} at {{ record.book_inventory.library.name }} - {{ record.status }}</li>
-          {% empty %}
-            <li>No active loans.</li>
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
+<div class="section-head">
+  <div>
+    <span class="eyebrow">Your library</span>
+    <h1 style="font-size:1.9rem; margin-top:0.3rem;">Hi, {{ user.username }}</h1>
   </div>
-  <div class="col-md-6">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h2 class="h5">Notifications</h2>
-        <ul>
-          {% for notification in notifications %}
-            <li>{{ notification.title }} - {{ notification.message }}</li>
-          {% empty %}
-            <li>No notifications yet.</li>
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
-  </div>
+  <a href="{% url 'catalog:home' %}" class="btn btn-primary btn-sm">Browse books</a>
 </div>
+
+<section class="section stat-grid">
+  <div class="stat-tile">
+    <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></div>
+    <div class="n">{{ active_count }}</div>
+    <div class="l">Active loans</div>
+  </div>
+  <div class="stat-tile">
+    <div class="stat-icon" style="color:#c76b8e; background:rgba(239,184,205,0.3);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+    <div class="n">{{ overdue_count }}</div>
+    <div class="l">Overdue</div>
+  </div>
+  <div class="stat-tile">
+    <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></div>
+    <div class="n">{{ unread_count }}</div>
+    <div class="l">New alerts</div>
+  </div>
+  <div class="stat-tile">
+    <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg></div>
+    <div class="n">{{ visit_count }}</div>
+    <div class="l">Session visits</div>
+  </div>
+</section>
+
+<section class="section split">
+  <div class="stack gap-4">
+    <div class="card">
+      <div class="section-head" style="margin-bottom:0.9rem;">
+        <span class="eyebrow">Active loans</span>
+        <a href="{% url 'borrowing:history' %}" class="form-hint">Full history →</a>
+      </div>
+      {% if active_loans %}
+        <div class="table-wrap">
+          <table class="lt-table">
+            <thead><tr><th>Title</th><th>Library</th><th>Due</th><th style="text-align:right;">Status</th></tr></thead>
+            <tbody>
+              {% for record in active_loans %}
+                <tr>
+                  <td style="font-weight:600;">{{ record.book_inventory.book.title }}</td>
+                  <td class="muted">{{ record.book_inventory.library.name }}</td>
+                  <td class="muted">{{ record.due_date|date:"M j"|default:"—" }}</td>
+                  <td style="text-align:right;"><span class="status-pill status-{{ record.status }}">{{ record.status }}</span></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p class="empty-note">No active loans. <a href="{% url 'catalog:home' %}">Browse the catalogue</a> to borrow something.</p>
+      {% endif %}
+    </div>
+
+    <div class="card">
+      <span class="eyebrow mb-3">On your waitlist</span>
+      {% if waitlist %}
+        <ul class="list-clean">
+          {% for entry in waitlist %}
+            <li>
+              <span><strong>{{ entry.book_inventory.book.title }}</strong> <span class="faint">· {{ entry.book_inventory.library.name }}</span></span>
+              {% if entry.notified %}<span class="chip chip-ok">Ready to borrow</span>{% else %}<span class="chip">Waiting</span>{% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="empty-note">You're not waiting on any titles.</p>
+      {% endif %}
+    </div>
+
+    <div class="card">
+      <div class="section-head" style="margin-bottom:0.9rem;">
+        <span class="eyebrow">Your donations</span>
+        <a href="{% url 'requests:donate' %}" class="form-hint">Donate a book →</a>
+      </div>
+      {% if my_donations %}
+        <div class="table-wrap">
+          <table class="lt-table">
+            <thead><tr><th>Title</th><th>Submitted</th><th style="text-align:right;">Status</th></tr></thead>
+            <tbody>
+              {% for d in my_donations %}
+                <tr>
+                  <td style="font-weight:600;">{{ d.title }}<div class="faint" style="font-size:0.8rem;">by {{ d.author }}</div></td>
+                  <td class="muted">{{ d.created_at|date:"M j, Y" }}</td>
+                  <td style="text-align:right;"><span class="status-pill status-{% if d.status == 'approved' %}approved{% elif d.status == 'rejected' %}overdue{% else %}pending{% endif %}">{{ d.status }}</span></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p class="empty-note">You haven't donated any books yet.</p>
+      {% endif %}
+    </div>
+
+    <div class="card">
+      <div class="section-head" style="margin-bottom:0.9rem;">
+        <span class="eyebrow">Your purchase requests</span>
+        <a href="{% url 'requests:purchase' %}" class="form-hint">Request a title →</a>
+      </div>
+      {% if my_purchases %}
+        <div class="table-wrap">
+          <table class="lt-table">
+            <thead><tr><th>Title</th><th>Submitted</th><th style="text-align:right;">Status</th></tr></thead>
+            <tbody>
+              {% for p in my_purchases %}
+                <tr>
+                  <td style="font-weight:600;">{{ p.book_title }}</td>
+                  <td class="muted">{{ p.created_at|date:"M j, Y" }}</td>
+                  <td style="text-align:right;"><span class="status-pill status-{% if p.status == 'approved' %}approved{% elif p.status == 'rejected' %}overdue{% else %}pending{% endif %}">{{ p.status }}</span></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p class="empty-note">You haven't requested any titles yet.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="stack gap-4">
+    <div class="card">
+      <span class="eyebrow mb-3">Notifications</span>
+      {% if notifications %}
+        <ul class="list-clean">
+          {% for n in notifications %}
+            <li style="align-items:flex-start; flex-direction:column; gap:2px;">
+              <strong style="font-size:0.94rem;">{{ n.title }}</strong>
+              <span class="muted small">{{ n.message }}</span>
+              <span class="faint" style="font-size:0.76rem;">{{ n.created_at|date:"M j, g:i a" }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="empty-note">No notifications yet.</p>
+      {% endif %}
+    </div>
+
+    <div class="card">
+      <span class="eyebrow mb-3">Quick actions</span>
+      <div class="stack gap-2">
+        <a class="btn btn-primary btn-block" href="{% url 'catalog:home' %}">Browse books</a>
+        <a class="btn btn-outline btn-block" href="{% url 'requests:donate' %}">Donate a book</a>
+        <a class="btn btn-ghost btn-block" href="{% url 'requests:purchase' %}">Request a title</a>
+      </div>
+    </div>
+
+    {% if recently_viewed_books %}
+      <div class="card">
+        <span class="eyebrow mb-2">Recently viewed</span>
+        <ul class="list-clean">
+          {% for b in recently_viewed_books %}
+            <li><a href="{% url 'catalog:book_detail' b.isbn %}" style="font-weight:600;">{{ b.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
 {% endblock %}

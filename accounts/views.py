@@ -6,6 +6,7 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import LoginForm, RegisterForm, EditProfileForm
+from .models import LibraryAdmin
 
 
 class RegisterView(View):
@@ -55,10 +56,19 @@ class LoginView(View):
 
         user = form.get_user()
         login(request, user)
-        messages.success(request, f"Welcome back, {user.username}!")
 
-        # Send user to the page they were trying to reach, or home
-        return redirect(request.GET.get("next", "catalog:home"))
+        # If the user was heading somewhere specific, honour that first.
+        next_url = request.GET.get("next")
+        if next_url:
+            return redirect(next_url)
+
+        # Library admins land on their branch console; everyone else on the catalogue.
+        if LibraryAdmin.objects.filter(user=user).exists():
+            messages.success(request, f"Welcome back, {user.username}. You're signed in as a branch admin.")
+            return redirect("dashboard:admin")
+
+        messages.success(request, f"Welcome back, {user.username}!")
+        return redirect("catalog:home")
 
 
 class LogoutView(View):

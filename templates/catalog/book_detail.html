@@ -1,64 +1,126 @@
 {% extends "base.html" %}
+{% load lt_extras %}
+{% block title %}{{ book.title }} · LibraryTrack{% endblock %}
 {% block content %}
-<div class="card shadow-sm mb-4">
-  <div class="card-body">
-    <h1 class="h3">{{ book.title }}</h1>
-    <p class="text-muted mb-1">By {{ book.author }}</p>
-    <p>ISBN: {{ book.isbn }}</p>
-    <p>Genre: {{ book.genre|default:"Not set" }}</p>
-    <p>{{ book.description|default:"No description provided." }}</p>
-  </div>
-</div>
 
-<div class="card shadow-sm mb-4">
-  <div class="card-body">
-    <h2 class="h5">Availability by library</h2>
-    <table class="table">
-      <thead><tr><th>Library</th><th>Available</th><th>Total</th><th>Actions</th></tr></thead>
+<a href="{% url 'catalog:home' %}" class="lt-link" style="padding-left:0; margin-bottom:1rem;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+  Back to catalogue
+</a>
+
+<section class="section split" style="align-items:stretch;">
+  <div class="card card-lg">
+    <span class="eyebrow">{% if book.age_rating %}Rated {{ book.age_rating }}{% else %}Catalogue title{% endif %}</span>
+    <h1 style="font-size:2.1rem; font-weight:800; margin:0.5rem 0 0.4rem;">{{ book.title }}</h1>
+    <p class="muted" style="font-size:1.05rem; margin-bottom:1rem;">by {{ book.author }}</p>
+    {% if book.genres.all %}
+      <div class="chip-row mb-2">
+        {% for genre in book.genres.all %}
+          <a href="{% url 'catalog:home' %}?genre={{ genre.name|urlencode }}" class="chip chip-lime">{{ genre.name }}</a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="faint small mb-2">No genres set</p>
+    {% endif %}
+    <p style="margin-bottom:1rem;">{{ book.description|default:"No description provided for this title yet." }}</p>
+    <div class="divider"></div>
+    <span class="faint small">ISBN {{ book.isbn }}</span>
+  </div>
+
+  <div class="book-cover cover-{{ book.isbn|cover_variant }} card" style="min-height:300px;">
+    {% if book.cover_url %}
+      <img src="{{ book.cover_url }}" alt="{{ book.title }} cover" class="cover-img"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <span class="spine" style="display:none; font-size:1.4rem; -webkit-line-clamp:5;">{{ book.title }}</span>
+    {% else %}
+      <span class="spine" style="font-size:1.4rem; -webkit-line-clamp:5;">{{ book.title }}</span>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section card">
+  <span class="eyebrow mb-3">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg>
+    Availability by library
+  </span>
+  <div class="table-wrap">
+    <table class="lt-table">
+      <thead>
+        <tr><th>Library</th><th>Available</th><th>Total</th><th style="text-align:right;">Action</th></tr>
+      </thead>
       <tbody>
         {% for inventory in inventories %}
           <tr>
-            <td>{{ inventory.library.name }}</td>
-            <td>{{ inventory.available_copies }}</td>
-            <td>{{ inventory.total_copies }}</td>
-            <td>
-              <a class="btn btn-sm btn-outline-primary {% if not user.is_authenticated %}disabled{% endif %}" href="{% url 'borrowing:request_borrow' inventory.id %}">Borrow</a>
-              {% if inventory.available_copies == 0 %}
-                <a class="btn btn-sm btn-outline-secondary {% if not user.is_authenticated %}disabled{% endif %}" href="{% url 'borrowing:join_waitlist' inventory.id %}">Join waitlist</a>
+            <td style="font-weight:600;">{{ inventory.library.name }}</td>
+            <td><span class="chip {% if inventory.available_copies %}chip-ok{% else %}chip-out{% endif %}">{{ inventory.available_copies }} free</span></td>
+            <td class="muted">{{ inventory.total_copies }} copies</td>
+            <td style="text-align:right;">
+              {% with existing=borrow_status|lookup:inventory.id %}
+              {% if existing %}
+                <span class="status-pill status-{{ existing }}">{{ existing }}</span>
+              {% elif inventory.available_copies %}
+                {% if user.is_authenticated %}
+                  <form method="post" action="{% url 'borrowing:request_borrow' inventory.id %}" style="display:inline; margin:0;">
+                    {% csrf_token %}
+                    <button class="btn btn-primary btn-sm" type="submit" data-pending-label="Pending...">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+                      Borrow
+                    </button>
+                  </form>
+                {% else %}
+                  <a class="btn btn-soft btn-sm" href="{% url 'accounts:login' %}?next={{ request.path }}">Log in to borrow</a>
+                {% endif %}
+              {% else %}
+                {% if user.is_authenticated %}
+                  {% if inventory.id in waitlisted_ids %}
+                    <button class="btn btn-soft btn-sm" type="button" disabled>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                      Joined
+                    </button>
+                  {% else %}
+                    <form method="post" action="{% url 'borrowing:join_waitlist' inventory.id %}" style="display:inline; margin:0;">
+                      {% csrf_token %}
+                      <button class="btn btn-pink btn-sm" type="submit" data-pending-label="Joining...">Join waitlist</button>
+                    </form>
+                  {% endif %}
+                {% else %}
+                  <a class="btn btn-soft btn-sm" href="{% url 'accounts:login' %}?next={{ request.path }}">Log in</a>
+                {% endif %}
               {% endif %}
+              {% endwith %}
             </td>
           </tr>
         {% empty %}
-          <tr><td colspan="4">No inventory registered for this title yet.</td></tr>
+          <tr><td colspan="4" class="empty-note">No library stocks this title yet.</td></tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
-</div>
+</section>
 
-<div class="row g-4">
-  <div class="col-md-6">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h2 class="h5">Request or donate</h2>
-        <a class="btn btn-primary" href="{% url 'requests:purchase' %}">Request purchase</a>
-        <a class="btn btn-outline-primary" href="{% url 'requests:donate' %}">Donate this book</a>
-      </div>
+<section class="section split">
+  <div class="card">
+    <span class="eyebrow mb-2">Help grow the catalogue</span>
+    <p class="muted small mb-2">Own a copy, or want us to stock this title? Let the library know.</p>
+    <div class="row-flex wrap gap-2">
+      <a class="btn btn-outline" href="{% url 'requests:donate' %}">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+        Donate this book
+      </a>
+      <a class="btn btn-ghost" href="{% url 'requests:purchase' %}">Request purchase</a>
     </div>
   </div>
-  <div class="col-md-6">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h2 class="h5">Recently viewed</h2>
-        <ul class="mb-0">
-          {% for recent_book in recently_viewed_books %}
-            <li><a href="{% url 'catalog:book_detail' recent_book.isbn %}">{{ recent_book.title }}</a></li>
-          {% empty %}
-            <li>No recent history in this session.</li>
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
+
+  <div class="card">
+    <span class="eyebrow mb-2">Recently viewed</span>
+    <ul class="list-clean">
+      {% for recent_book in recently_viewed_books %}
+        <li><a href="{% url 'catalog:book_detail' recent_book.isbn %}" style="font-weight:600;">{{ recent_book.title }}</a></li>
+      {% empty %}
+        <li class="empty-note">Nothing viewed yet this session.</li>
+      {% endfor %}
+    </ul>
   </div>
-</div>
+</section>
+
 {% endblock %}

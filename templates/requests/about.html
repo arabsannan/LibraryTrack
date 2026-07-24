@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}About · LibraryTrack{% endblock %}
+{% block content %}
+
+<section class="section hero card">
+  <span class="blob blob-1"></span>
+  <span class="blob blob-2"></span>
+  <span class="eyebrow">About LibraryTrack</span>
+  <h1>A shared shelf<br>for every library.</h1>
+  <p class="lede">LibraryTrack keeps one clean catalogue across a whole network of libraries, so a title lives in one place and every library tracks its own copies.</p>
+</section>
+
+<section class="section feature-grid">
+  <div class="card">
+    <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
+    <h3 class="section-title mb-1">Find anything</h3>
+    <p class="muted small" style="margin:0;">Search by title, author, ISBN, genre, or library, and filter down to what's on the shelf right now.</p>
+  </div>
+  <div class="card">
+    <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></div>
+    <h3 class="section-title mb-1">Borrow with ease</h3>
+    <p class="muted small" style="margin:0;">Request a loan, join a waitlist when a copy is out, and get notified the moment it's free again.</p>
+  </div>
+  <div class="card">
+    <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
+    <h3 class="section-title mb-1">Give back</h3>
+    <p class="muted small" style="margin:0;">Donate books you've finished with, or suggest titles you'd love to see the library carry.</p>
+  </div>
+</section>
+
+<section class="section card card-lg">
+  <span class="eyebrow mb-2">How it works</span>
+  <p class="muted" style="margin:0;">Every book lives in the catalogue once, tied to its ISBN, so there are no duplicate records to keep in sync across the network. Each library keeps its own inventory on top of that shared record, tracking how many copies it holds and how many are free right now. Members search the whole network from one place, borrow from whichever library has a copy, and join a waitlist when everything is out. Each library's admin looks after only their own shelves: approving loans, reviewing donations and purchase suggestions, and keeping stock accurate.</p>
+</section>
+
+<section class="section split">
+  <div class="card card-lg">
+    <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+    <h3 class="section-title mb-1">Join as a member</h3>
+    <p class="muted small mb-2">Create a free account to borrow books, join waitlists, track your loan history, and suggest or donate titles. Anyone can sign up in under a minute.</p>
+    <a class="btn btn-primary" href="{% url 'accounts:register' %}">Create an account</a>
+  </div>
+  <div class="card card-lg">
+    <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></div>
+    <h3 class="section-title mb-1">Join as a library admin</h3>
+    <p class="muted small mb-2">Admins manage a single library: approving loans, reviewing donations, and keeping stock accurate. Admin access is granted by staff, not self-serve, so a library controls who runs its shelves. Talk to your library to be set up.</p>
+    <a class="btn btn-ghost" href="{% url 'requests:contact' %}">Get in touch</a>
+  </div>
+</section>
+
+<section class="section card text-center">
+  <p class="muted" style="margin:0;">Ready to dive in? <a href="{% url 'requests:team' %}">Meet the team →</a></p>
+</section>
+
+{% endblock %}

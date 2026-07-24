@@ -1,9 +1,22 @@
 {% extends "base.html" %}
+{% block title %}Contact · LibraryTrack{% endblock %}
 {% block content %}
-<h1 class="h3 mb-3">Contact us</h1>
-<form method="post" class="card card-body shadow-sm">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button class="btn btn-primary">Send message</button>
-</form>
+<div class="narrow-wide">
+  <div class="card card-lg">
+    <span class="eyebrow">Get in touch</span>
+    <h1 style="font-size:1.55rem; font-weight:800; margin:0.5rem 0 0.4rem;">Contact us</h1>
+    <p class="form-hint mb-3">Questions, feedback, or a hold you can't figure out? Send us a note.</p>
+    <form method="post" class="form-stack">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="field">
+          <label class="field-label">{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}<div class="field-error">{{ field.errors }}</div>{% endif %}
+        </div>
+      {% endfor %}
+      <button class="btn btn-primary btn-block" type="submit">Send message</button>
+    </form>
+  </div>
+</div>
 {% endblock %}

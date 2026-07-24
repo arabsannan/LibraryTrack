@@ -1,9 +1,22 @@
 {% extends "base.html" %}
+{% block title %}Request a title · LibraryTrack{% endblock %}
 {% block content %}
-<h1 class="h3 mb-3">Request a book purchase</h1>
-<form method="post" class="card card-body shadow-sm">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button class="btn btn-primary">Submit purchase request</button>
-</form>
+<div class="narrow-wide">
+  <div class="card card-lg">
+    <span class="eyebrow">Purchase request</span>
+    <h1 style="font-size:1.55rem; font-weight:800; margin:0.5rem 0 0.4rem;">Request a title</h1>
+    <p class="form-hint mb-3">Suggest a book for the library to acquire.</p>
+    <form method="post" class="form-stack">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="field">
+          <label class="field-label">{{ field.label }}{% if not field.field.required %} <span class="faint">(optional)</span>{% endif %}</label>
+          {{ field }}
+          {% if field.errors %}<div class="field-error">{{ field.errors }}</div>{% endif %}
+        </div>
+      {% endfor %}
+      <button class="btn btn-primary btn-block" type="submit">Submit purchase request</button>
+    </form>
+  </div>
+</div>
 {% endblock %}

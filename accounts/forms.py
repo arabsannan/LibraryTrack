@@ -1,20 +1,51 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm, SetPasswordForm
 
 from .models import UserProfile
 
 
+class StyledPasswordResetForm(PasswordResetForm):
+    """The 'enter your email' step, with our input styling."""
+    email = forms.EmailField(
+        max_length=254,
+        widget=forms.EmailInput(attrs={
+            "class": "form-control",
+            "placeholder": "you@example.com",
+            "autocomplete": "email",
+        }),
+    )
+
+
+class StyledSetPasswordForm(SetPasswordForm):
+    """The 'choose a new password' step, with our input styling."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["new_password1"].widget.attrs.update({
+            "class": "form-control", "autocomplete": "new-password",
+        })
+        self.fields["new_password2"].widget.attrs.update({
+            "class": "form-control", "autocomplete": "new-password",
+        })
+
+
 class RegisterForm(forms.ModelForm):
     # Extra fields not on the User model
-    password = forms.CharField(widget=forms.PasswordInput)
-    confirm_password = forms.CharField(widget=forms.PasswordInput)
-    age = forms.IntegerField(min_value=1, required=False)
-    profile_photo = forms.ImageField(required=False)
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"class": "form-control"}))
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={"class": "form-control"}))
+    age = forms.IntegerField(min_value=1, required=False,
+                             widget=forms.NumberInput(attrs={"class": "form-control"}))
+    profile_photo = forms.ImageField(required=False,
+                                     widget=forms.ClearableFileInput(attrs={"class": "form-control"}))
 
     class Meta:
         model = User
         fields = ["username", "email", "password"]
+        widgets = {
+            "username": forms.TextInput(attrs={"class": "form-control"}),
+            "email": forms.EmailInput(attrs={"class": "form-control"}),
+        }
 
     def clean(self):
         cleaned_data = super().clean()
@@ -41,3 +72,7 @@ class EditProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ["age", "profile_photo"]
+        widgets = {
+            "age": forms.NumberInput(attrs={"class": "form-control"}),
+            "profile_photo": forms.ClearableFileInput(attrs={"class": "form-control"}),
+        }

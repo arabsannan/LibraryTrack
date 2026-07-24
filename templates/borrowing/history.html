@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Borrow history · LibraryTrack{% endblock %}
+{% block content %}
+
+<a href="{% url 'dashboard:member' %}" class="lt-link" style="padding-left:0; margin-bottom:0.8rem;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+  Back to dashboard
+</a>
+
+<div class="section-head">
+  <div>
+    <span class="eyebrow">Borrowing</span>
+    <h1 style="font-size:1.9rem; margin-top:0.3rem;">Your borrow history</h1>
+  </div>
+</div>
+
+<div class="card">
+  {% if records %}
+    <div class="table-wrap">
+      <table class="lt-table">
+        <thead>
+          <tr><th>Title</th><th>Library</th><th>Requested</th><th>Due</th><th>Returned</th><th>Status</th><th style="text-align:right;">Action</th></tr>
+        </thead>
+        <tbody>
+          {% for record in records %}
+            <tr>
+              <td style="font-weight:600;">{{ record.book_inventory.book.title }}</td>
+              <td class="muted">{{ record.book_inventory.library.name }}</td>
+              <td class="muted">{{ record.request_date|date:"M j, Y" }}</td>
+              <td class="muted">{{ record.due_date|date:"M j, Y"|default:"—" }}</td>
+              <td class="muted">{{ record.return_date|date:"M j, Y"|default:"—" }}</td>
+              <td><span class="status-pill status-{{ record.status }}">{{ record.status }}</span></td>
+              <td style="text-align:right;">
+                {% if record.status == "approved" or record.status == "overdue" %}
+                  <form method="post" action="{% url 'borrowing:return_book' record.id %}" style="margin:0;">
+                    {% csrf_token %}<button class="btn btn-primary btn-sm" type="submit" data-pending-label="Returning...">Return</button>
+                  </form>
+                {% else %}
+                  <span class="faint">—</span>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="empty-note">You haven't borrowed anything yet. <a href="{% url 'catalog:home' %}">Find a book</a>.</p>
+  {% endif %}
+
+  {% if is_paginated %}
+    <ul class="pagination">
+      {% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>{% endif %}
+      <li class="page-item active"><span class="page-link">{{ page_obj.number }} of {{ paginator.num_pages }}</span></li>
+      {% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>{% endif %}
+    </ul>
+  {% endif %}
+</div>
+
+{% endblock %}

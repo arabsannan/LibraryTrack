@@ -39,6 +39,23 @@ class Book(models.Model):
 
     def __str__(self):
         return f"{self.title} ({self.isbn})"
+
+    @property
+    def cover_url(self):
+        """
+        A cover image for this book.
+
+        If someone has uploaded a file to `cover_image`, use that. Otherwise fall
+        back to the Open Library Covers API, which serves covers by ISBN for free
+        (no key needed). `default=false` makes it return a 404 instead of a blank
+        placeholder when a cover isn't found, so the template can fall back to the
+        gradient cover.
+        """
+        if self.cover_image:
+            return self.cover_image.url
+        if self.isbn:
+            return f"https://covers.openlibrary.org/b/isbn/{self.isbn}-M.jpg?default=false"
+        return ""
     
 
 
