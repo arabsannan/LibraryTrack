@@ -1,46 +1,172 @@
 [
   {
     "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "username": "jane.reader",
+      "first_name": "Jane",
+      "last_name": "Reader",
+      "email": "jane.reader@example.ca",
+      "password": "pbkdf2_sha256$1200000$7HI3tbxO00h68xZYxDFQOl$6TVHV/AskPPdOl29KVXd2ZrrGzLmVFPjigDqTGNQ4Bk=",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "username": "sam.booklover",
+      "first_name": "Sam",
+      "last_name": "Booklover",
+      "email": "sam.booklover@example.ca",
+      "password": "pbkdf2_sha256$1200000$nkERcFyvRH40sR6Fv9qznP$lolE1Q3uwWjQc09y4PHaE4ej8wD4JTwkZJghWOjgFMY=",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true
+    }
+  },
+  {
+    "model": "auth.user",
     "pk": 3,
     "fields": {
-      "password": "pbkdf2_sha256$1200000$t13epBwWBQPhdPxhowxYw1$UoX8aNTbXL/oE3iAiyhSU4H15PyE0vigldB5wn8gzXk=",
-      "last_login": null,
+      "username": "admin.central",
+      "first_name": "Alice",
+      "last_name": "Central",
+      "email": "admin.central@librarytrack.example.ca",
+      "password": "pbkdf2_sha256$1200000$2UN5rQBXXle1LZ7I1VNaXc$DuOxArFAEg+bbkMIk1H3ZCjZjpcM1MMH8TtZozNclbY=",
+      "is_staff": true,
       "is_superuser": false,
-      "username": "admin",
-      "first_name": "",
-      "last_name": "",
-      "email": "admin@librarytrack.test",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2026-07-21T12:17:38.361Z",
-      "groups": [],
-      "user_permissions": []
+      "is_active": true
     }
   },
   {
     "model": "auth.user",
     "pk": 4,
     "fields": {
-      "password": "pbkdf2_sha256$1200000$quzPecGVat2JZqzrqUljFd$CmIHJbHvPVWtiIrtA1tX0jf1jz5adVBCRk7qH3v1m9w=",
-      "last_login": null,
+      "username": "admin.riverside",
+      "first_name": "Ben",
+      "last_name": "Riverside",
+      "email": "admin.riverside@librarytrack.example.ca",
+      "password": "pbkdf2_sha256$1200000$CZI25ZcZOJeZRcWjrSm5hU$lJaRP1I/tj1jvjl1UsxN2cMmqYdlRYwIAqmkTtkfxYs=",
+      "is_staff": true,
       "is_superuser": false,
-      "username": "member",
-      "first_name": "",
-      "last_name": "",
-      "email": "member@librarytrack.test",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2026-07-21T12:17:38.751Z",
-      "groups": [],
-      "user_permissions": []
+      "is_active": true
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+      "username": "admin.sandwich",
+      "first_name": "Carla",
+      "last_name": "Sandwich",
+      "email": "admin.sandwich@librarytrack.example.ca",
+      "password": "pbkdf2_sha256$1200000$n9onfwo18O0zHtJ54RLRQc$mkwDAGYgDe9/iL6TmocFSr7dtEXzKh6qdyww3Qq9bK0=",
+      "is_staff": true,
+      "is_superuser": false,
+      "is_active": true
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 6,
+    "fields": {
+      "username": "admin.fontainebleau",
+      "first_name": "Derek",
+      "last_name": "Fontainebleau",
+      "email": "admin.fontainebleau@librarytrack.example.ca",
+      "password": "pbkdf2_sha256$1200000$9sjWs0GEW2FAahrk2gYsYT$61Tqi3dbOqXcyGCYmzhIsrjSApdySKzMkJo1DI+ASsM=",
+      "is_staff": true,
+      "is_superuser": false,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.userprofile",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "age": 27,
+      "profile_photo": ""
+    }
+  },
+  {
+    "model": "accounts.userprofile",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "age": 34,
+      "profile_photo": ""
+    }
+  },
+  {
+    "model": "accounts.userprofile",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "age": 41,
+      "profile_photo": ""
+    }
+  },
+  {
+    "model": "accounts.userprofile",
+    "pk": 4,
+    "fields": {
+      "user": 4,
+      "age": 38,
+      "profile_photo": ""
+    }
+  },
+  {
+    "model": "accounts.userprofile",
+    "pk": 5,
+    "fields": {
+      "user": 5,
+      "age": 45,
+      "profile_photo": ""
+    }
+  },
+  {
+    "model": "accounts.userprofile",
+    "pk": 6,
+    "fields": {
+      "user": 6,
+      "age": 36,
+      "profile_photo": ""
+    }
+  },
+  {
+    "model": "accounts.libraryadmin",
+    "pk": 1,
+    "fields": {
+      "user": 3,
+      "library": 1
     }
   },
   {
     "model": "accounts.libraryadmin",
     "pk": 2,
     "fields": {
-      "user": 3,
-      "library": 1
+      "user": 4,
+      "library": 2
+    }
+  },
+  {
+    "model": "accounts.libraryadmin",
+    "pk": 3,
+    "fields": {
+      "user": 5,
+      "library": 3
+    }
+  },
+  {
+    "model": "accounts.libraryadmin",
+    "pk": 4,
+    "fields": {
+      "user": 6,
+      "library": 4
     }
   }
 ]

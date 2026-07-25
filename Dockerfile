@@ -33,4 +33,4 @@ ENV PORT=8000
 
 # Start the Django application with Gunicorn
 #CMD gunicorn librarytrack.wsgi:application --bind 0.0.0.0:$PORT
-CMD python manage.py migrate --noinput && python manage.py loaddata catalog_seed.json && gunicorn librarytrack.wsgi:application --bind 0.0.0.0:$PORT
+CMD python manage.py migrate --noinput && python manage.py createsuperuser --noinput && python manage.py loaddata demo_accounts.json && gunicorn librarytrack.wsgi:application --bind 0.0.0.0:$PORT
