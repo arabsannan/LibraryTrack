@@ -140,6 +140,15 @@ STORAGES = {
     },
 }
 
+STORAGES = {
+   "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'catalog:home'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
