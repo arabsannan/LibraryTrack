@@ -91,6 +91,20 @@ class BookDetailView(DetailView):
 		recently_viewed = self.request.session.get("recently_viewed_books", [])
 		recently_viewed = [isbn for isbn in recently_viewed if isbn != self.object.isbn]
 		recently_viewed.insert(0, self.object.isbn)
-		self.request.session["recently_viewed_books"] = recently_viewed[:5]
-		context["recently_viewed_books"] = Book.objects.filter(isbn__in=recently_viewed[:5])
+		recent_isbns = recently_viewed[:5]
+
+		self.request.session["recently_viewed_books"] = recent_isbns
+
+		#Tells Django the session list was changed
+		self.request.session.modified = True
+
+		# Fetch matching records from the database
+		book_query = Book.objects.filter(isbn__in=recent_isbns)
+
+		# Map books to preserve exact user timeline ordering
+		book_map = {book.isbn: book for book in book_query}
+		context["recently_viewed_books"] = [
+			book_map[isbn] for isbn in recent_isbns if isbn in book_map
+		]
+
 		return context
