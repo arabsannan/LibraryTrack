@@ -14,8 +14,8 @@
 <section class="section feature-grid">
   {% for m in members %}
     <div class="card">
-      <div class="book-cover cover-{{ m.name|cover_variant }}" style="width:56px; height:56px; aspect-ratio:1; border-radius:16px; margin-bottom:0.9rem; padding:0;">
-        <span class="spine" style="font-size:1.1rem;">{{ m.name|initials }}</span>
+      <div class="initial-avatar cover-{{ m.name|cover_variant }}" aria-hidden="true">
+        <span>{{ m.name|initials }}</span>
       </div>
       <h3 class="section-title mb-1">{{ m.name }}</h3>
       <div class="chip chip-lime mb-2">{{ m.role }}</div>

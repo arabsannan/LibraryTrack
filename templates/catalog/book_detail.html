@@ -8,8 +8,8 @@
   Back to catalogue
 </a>
 
-<section class="section split" style="align-items:stretch;">
-  <div class="card card-lg">
+<section class="section split book-detail-hero">
+  <div class="card card-lg book-detail-info">
     <span class="eyebrow">{% if book.age_rating %}Rated {{ book.age_rating }}{% else %}Catalogue title{% endif %}</span>
     <h1 style="font-size:2.1rem; font-weight:800; margin:0.5rem 0 0.4rem;">{{ book.title }}</h1>
     <p class="muted" style="font-size:1.05rem; margin-bottom:1rem;">by {{ book.author }}</p>
@@ -26,16 +26,23 @@
     <div class="divider"></div>
     <span class="faint small">ISBN {{ book.isbn }}</span>
   </div>
-
-  <div class="book-cover cover-{{ book.isbn|cover_variant }} card" style="min-height:300px;">
+  <div class="book-detail-cover cover-{{ book.isbn|cover_variant }} card">
     {% if book.cover_url %}
-      <img src="{{ book.cover_url }}" alt="{{ book.title }} cover" class="cover-img"
-           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-      <span class="spine" style="display:none; font-size:1.4rem; -webkit-line-clamp:5;">{{ book.title }}</span>
+      <img
+        src="{{ book.cover_url }}"
+        alt="{{ book.title }} cover"
+        class="cover-img"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+      >
+      <span class="spine" style="display:none;">
+        {{ book.title }}
+      </span>
     {% else %}
-      <span class="spine" style="font-size:1.4rem; -webkit-line-clamp:5;">{{ book.title }}</span>
+      <span class="spine">{{ book.title }}</span>
     {% endif %}
   </div>
+  
+
 </section>
 
 <section class="section card">
@@ -98,7 +105,7 @@
   </div>
 </section>
 
-<section class="section split">
+<section class="section split book-detail-extras">
   <div class="card">
     <span class="eyebrow mb-2">Help grow the catalogue</span>
     <p class="muted small mb-2">Have a copy to give, or a title you'd like us to carry? We'd love to hear from you.</p>

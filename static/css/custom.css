@@ -360,14 +360,9 @@ input:focus {
 textarea { resize: vertical; min-height: 96px; }
 ::placeholder { color: var(--ink-faint); }
 
-/* --------------------------------------------------------------------------
-   Book cards — the fix: unified cover + body, no dead gap
-   -------------------------------------------------------------------------- */
+
 .book-grid {
   display: grid;
-  /* Exactly three per row on desktop: wider cards so titles and library names
-     have room to breathe instead of wrapping awkwardly. Collapses to two, then
-     one, on smaller screens. */
   grid-template-columns: repeat(3, 1fr);
   gap: var(--gutter);
 }
@@ -389,22 +384,54 @@ textarea { resize: vertical; min-height: 96px; }
 }
 .book-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
 
-.book-cover {
-  aspect-ratio: 3 / 2;
-  display: grid;
-  place-items: center;
-  padding: 1.2rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+.book-card > .book-cover {
+  height: 240px;
+  aspect-ratio: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
   position: relative;
   overflow: hidden;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.72),
+      rgba(214, 232, 184, 0.28)
+    );
 }
-.book-cover .cover-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+
+.book-card > .book-cover > img.cover-img {
+  position: static;
+  inset: auto;
+
+  display: block;
+
+  width: auto;
+  height: auto;
+  max-width: min(100%, 164px);
+  max-height: 204px;
+
+  object-fit: contain;
+  border-radius: 5px;
+
+  box-shadow: 0 8px 20px rgba(60, 54, 40, 0.18);
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
 }
+.book-card:hover > .book-cover > img.cover-img {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(60, 54, 40, 0.22);
+}
+
 .book-cover .spine {
   font-family: var(--font-display);
   font-weight: 700;
@@ -422,6 +449,90 @@ textarea { resize: vertical; min-height: 96px; }
 .cover-3 { background: linear-gradient(135deg, var(--yellow-soft), var(--chartreuse)); }
 .cover-4 { background: linear-gradient(135deg, var(--brown-soft), var(--yellow-soft)); }
 .cover-5 { background: linear-gradient(135deg, var(--lilac-soft), var(--pink-soft)); }
+
+.initial-avatar {
+  width: 56px;
+  height: 56px;
+  flex: 0 0 56px;
+
+  display: grid;
+  place-items: center;
+
+  overflow: hidden;
+  margin-bottom: 0.9rem;
+  border-radius: 16px;
+
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.initial-avatar > img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.initial-avatar-lg {
+  width: 88px;
+  height: 88px;
+  flex-basis: 88px;
+  margin-bottom: 0;
+  border-radius: 20px;
+  font-size: 1.7rem;
+}
+
+.initial-avatar > span {
+  display: block;
+  text-align: center;
+}
+
+.split.book-detail-hero {
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 380px);
+  align-items: stretch;
+}
+
+.book-detail-cover {
+  min-height: 0;
+  height: 100%;
+  padding: clamp(1.25rem, 3vw, 2rem);
+
+  display: grid;
+  place-items: center;
+
+  overflow: hidden;
+}
+
+.book-detail-cover > img.cover-img {
+  display: block;
+
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 420px;
+
+  object-fit: contain;
+  border-radius: 7px;
+  box-shadow: 0 14px 32px rgba(60, 54, 40, 0.22);
+}
+
+.book-detail-cover > .spine {
+  max-width: 18ch;
+
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.split.book-detail-extras {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+}
 
 .book-body {
   padding: 1.1rem 1.2rem 1.25rem;
@@ -650,6 +761,18 @@ textarea { resize: vertical; min-height: 96px; }
   .filter-panel { position: static; }
   .split { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
+  .split.book-detail-hero, .split.book-detail-extras  {
+    grid-template-columns: 1fr;
+  }
+
+  .book-detail-cover {
+    min-height: 320px;
+    height: auto;
+  }
+
+  .book-detail-cover > img.cover-img {
+    max-height: 280px;
+  }
 }
 @media (max-width: 720px) {
   .lt-nav-toggle { display: inline-flex; }
@@ -665,6 +788,21 @@ textarea { resize: vertical; min-height: 96px; }
 }
 @media (max-width: 480px) {
   .footer-grid { grid-template-columns: 1fr; }
+  .book-card > .book-cover {
+    height: 220px;
+  }
+
+  .book-card > .book-cover > img.cover-img {
+    max-height: 184px;
+  }
+
+  .book-detail-cover {
+    min-height: 300px;
+  }
+
+  .book-detail-cover > img.cover-img {
+    max-height: 330px;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }

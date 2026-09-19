@@ -5,11 +5,11 @@
 <div style="max-width:680px; margin:0 auto;">
   <div class="card card-lg">
     <div class="row-flex gap-3">
-      <div class="book-cover cover-{{ user.username|cover_variant }}" style="width:88px; height:88px; aspect-ratio:1; border-radius:20px; flex-shrink:0; overflow:hidden; padding:0;">
+      <div class="initial-avatar initial-avatar-lg cover-{{ user.username|cover_variant }}">
         {% if user.profile.profile_photo %}
-          <img src="{{ user.profile.profile_photo.url }}" alt="Profile photo" style="width:100%; height:100%; object-fit:cover;">
+          <img src="{{ user.profile.profile_photo.url }}" alt="Profile photo">
         {% else %}
-          <span class="spine" style="font-size:1.7rem;">{{ user.username|first|upper }}</span>
+          <span aria-hidden="true">{{ user.username|first|upper }}</span>
         {% endif %}
       </div>
       <div>
